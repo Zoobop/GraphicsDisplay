@@ -195,7 +195,7 @@ int main()
 		texture.Bind();
 		/** Bind the Vertex Array Object so OpenGL knows to use it */
 		vao.Bind();
-		/** Draw the primitives, number of indices, datatype of indices, index of indices */
+		/** Draw the primitives, number of indices, data type of indices, index of indices */
 		glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(int), GL_UNSIGNED_INT, 0);
 
 		lightShader.Activate();
