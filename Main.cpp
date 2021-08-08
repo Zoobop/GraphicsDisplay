@@ -13,43 +13,56 @@
 #include "ElementBufferObject.h"
 #include "Camera.h"
 
-const unsigned int width = 800;
-const unsigned int height = 800;
 
-/** Vertices coordinates */
-GLfloat vertices[] = {
-	/**  Coordinates     |         Colors           | Texture Coords |        Normals       */
-	-0.5f, 0.0f,  0.5f,		0.83f, 0.70f,  0.44f,		0.0f,  0.0f,	0.0f, -1.0f,  0.0f, // Bottom side
-	-0.5f, 0.0f, -0.5f,		0.83f, 0.70f,  0.44f,		0.0f,  5.0f, 	0.0f, -1.0f,  0.0f, // Bottom side
-	 0.5f, 0.0f, -0.5f,		0.83f, 0.70f,  0.44f,		5.0f,  5.0f, 	0.0f, -1.0f,  0.0f, // Bottom side
-	 0.5f, 0.0f,  0.5f,		0.83f, 0.70f,  0.44f,		5.0f,  0.0f, 	0.0f, -1.0f,  0.0f, // Bottom side
+const GLfloat pyramidVertices[] = {
+	-0.5f, 0.0f, 0.5f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, // Bottom side
+	-0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f, 0.0f, 5.0f, 0.0f, -1.0f, 0.0f, // Bottom side
+	0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f, 5.0f, 5.0f, 0.0f, -1.0f, 0.0f, // Bottom side
+	0.5f, 0.0f, 0.5f, 0.83f, 0.70f, 0.44f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f, // Bottom side
 
-	-0.5f, 0.0f,  0.5f,		0.83f, 0.70f,  0.44f,		0.0f,  0.0f,   -0.8f,  0.5f,  0.0f, // Left side
-	-0.5f, 0.0f, -0.5f,		0.83f, 0.70f,  0.44f,		5.0f,  0.0f,   -0.8f,  0.5f,  0.0f, // Left side
-	 0.0f, 0.8f,  0.0f,		0.92f, 0.86f,  0.76f,		2.5f,  5.0f,   -0.8f,  0.5f,  0.0f, // Left side
+	-0.5f, 0.0f, 0.5f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f, -0.8f, 0.5f, 0.0f, // Left side
+	-0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f, 5.0f, 0.0f, -0.8f, 0.5f, 0.0f, // Left side
+	0.0f, 0.8f, 0.0f, 0.92f, 0.86f, 0.76f, 2.5f, 5.0f, -0.8f, 0.5f, 0.0f, // Left side
 
-	-0.5f, 0.0f, -0.5f,		0.83f, 0.70f,  0.44f,		5.0f,  0.0f,    0.0f,  0.5f, -0.8f, // Non-facing side
-	 0.5f, 0.0f, -0.5f,		0.83f, 0.70f,  0.44f,		0.0f,  0.0f,    0.0f,  0.5f, -0.8f, // Non-facing side
-	 0.0f, 0.8f,  0.0f,		0.92f, 0.86f,  0.76f,		2.5f,  5.0f,    0.0f,  0.5f, -0.8f, // Non-facing side
+	-0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f, 5.0f, 0.0f, 0.0f, 0.5f, -0.8f, // Non-facing side
+	0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f, 0.0f, 0.5f, -0.8f, // Non-facing side
+	0.0f, 0.8f, 0.0f, 0.92f, 0.86f, 0.76f, 2.5f, 5.0f, 0.0f, 0.5f, -0.8f, // Non-facing side
 
-	 0.5f, 0.0f, -0.5f,		0.83f, 0.70f,  0.44f,		0.0f,  0.0f,    0.8f,  0.5f,  0.0f, // Right side
-	 0.5f, 0.0f,  0.5f,		0.83f, 0.70f,  0.44f,		5.0f,  0.0f,    0.8f,  0.5f,  0.0f, // Right side
-	 0.0f, 0.8f,  0.0f,		0.92f, 0.86f,  0.76f,		2.5f,  5.0f,    0.8f,  0.5f,  0.0f, // Right side
+	0.5f, 0.0f, -0.5f, 0.83f, 0.70f, 0.44f, 0.0f, 0.0f, 0.8f, 0.5f, 0.0f, // Right side
+	0.5f, 0.0f, 0.5f, 0.83f, 0.70f, 0.44f, 5.0f, 0.0f, 0.8f, 0.5f, 0.0f, // Right side
+	0.0f, 0.8f, 0.0f, 0.92f, 0.86f, 0.76f, 2.5f, 5.0f, 0.8f, 0.5f, 0.0f, // Right side
 
-	 0.5f, 0.0f,  0.5f,		0.92f, 0.86f,  0.76f,		5.0f,  0.0f,    0.0f,  0.5f,  0.8f, // Facing side
-	-0.5f, 0.0f,  0.5f,		0.92f, 0.86f,  0.76f,		0.0f,  0.0f,    0.0f,  0.5f,  0.8f, // Facing side
-	 0.0f, 0.8f,  0.0f,		0.92f, 0.86f,  0.76f,		2.5f,  5.0f,    0.0f,  0.5f,  0.8f, // Facing side
-
+	0.5f, 0.0f, 0.5f, 0.92f, 0.86f, 0.76f, 5.0f, 0.0f, 0.0f, 0.5f, 0.8f, // Facing side
+	-0.5f, 0.0f, 0.5f, 0.92f, 0.86f, 0.76f, 0.0f, 0.0f, 0.0f, 0.5f, 0.8f, // Facing side
+	0.0f, 0.8f, 0.0f, 0.92f, 0.86f, 0.76f, 2.5f, 5.0f, 0.0f, 0.5f, 0.8f, // Facing side
 };
-
-/** Indices for vertices order */
-GLuint indices[] = {
+const GLuint pyramidIndices[] = {
 	0, 1, 2,	// Bottom side
 	0, 2, 3,	// Bottom side
 	4, 6, 5,	// Left side
 	7, 9, 8,	// Non-facing side
 	10, 12, 11,	// Right side
 	13, 15, 14,	// Facing side
+};
+
+
+const unsigned int width = 800;
+const unsigned int height = 800;
+
+
+/** Vertices coordinates */
+GLfloat vertices[] = {
+	/**  Coordinates     |         Colors       | Texture Coords |        Normals       */
+	-1.0f, 0.0f,  1.0f,		0.0f, 0.0f, 0.0f,		0.0f, 0.0f,		0.0f, 1.0f, 0.0f,
+	-1.0f, 0.0f, -1.0f,		0.0f, 0.0f, 0.0f,		0.0f, 1.0f,		0.0f, 1.0f, 0.0f,
+	 1.0f, 0.0f, -1.0f,		0.0f, 0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f, 0.0f,
+	 1.0f, 0.0f,  1.0f,		0.0f, 0.0f, 0.0f,		1.0f, 0.0f,		0.0f, 1.0f, 0.0f,
+};
+
+/** Indices for vertices order */
+GLuint indices[] = {
+	0, 1, 2,	// Bottom side
+	0, 2, 3,	// Bottom side
 };
 
 /** Light vertices coordinates */
@@ -167,8 +180,10 @@ int main()
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
 	/** Texture */
-	Texture texture("gollum.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	Texture texture("planks.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 	texture.TexUnit(shaderProgram, "tex0", 0);
+	Texture planksSpec("planksSpec.png", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
+	planksSpec.TexUnit(shaderProgram, "tex1", 1);
 
 	/** Enables the depth buffer */
 	glEnable(GL_DEPTH_TEST);
@@ -190,9 +205,13 @@ int main()
 
 		/** Tell OpenGL which Shader Program we want to use */
 		shaderProgram.Activate();
+		/** Exports the camera position to the Fragment Shader for specular lighting */
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "camPos"), camera.position.x, camera.position.y, camera.position.z);
+		/** Export the camMatrix to the Vertex Shader of the pyramid */
 		camera.Matrix(shaderProgram, "camMatrix");
-
+		/** Bind textures so that they appear in rendering */
 		texture.Bind();
+		planksSpec.Bind();
 		/** Bind the Vertex Array Object so OpenGL knows to use it */
 		vao.Bind();
 		/** Draw the primitives, number of indices, data type of indices, index of indices */
@@ -214,6 +233,10 @@ int main()
 	vao.Delete();
 	vbo.Delete();
 	ebo.Delete();
+	lightVAO.Delete();
+	lightVBO.Delete();
+	lightEBO.Delete();
+	lightShader.Delete();
 	texture.Delete();
 	shaderProgram.Delete();
 
