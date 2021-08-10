@@ -1,12 +1,12 @@
 #include "ElementBufferObject.h"
 
-ElementBufferObject::ElementBufferObject(GLuint* indices, GLsizeiptr size)
+ElementBufferObject::ElementBufferObject(std::vector<GLuint>& indices)
 {
 	glGenBuffers(1, &ID);
 	/** Bind the Element Buffer Object specifying it's a GL_ELEMENT_ARRAY_BUFFER */
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID);
 	/** Introduce the indices into the Element Buffer Object */
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 }
 
 void ElementBufferObject::Bind()
