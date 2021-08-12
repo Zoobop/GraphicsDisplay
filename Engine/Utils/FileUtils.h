@@ -10,19 +10,17 @@ namespace ZM { namespace Utils {
 	public:
 		static std::string GetFileContents(const char* filePath)
 		{
-			FILE* file = fopen(filePath, "rt");
-			fseek(file, 0, SEEK_END);
-			unsigned long length = ftell(file);
-			char* data = new char[length + 1];
-
-			memset(data, 0, length + 1);
-			fseek(file, 0, SEEK_SET);
-			fread(data, 1, length, file);
-			fclose(file);
-
-			std::string result(data);
-			delete[] data;
-			return result;
+			std::ifstream in(filePath , std::ios::binary);
+			if (in)
+			{
+				std::string contents;
+				in.seekg(0, std::ios::end);
+				contents.resize(in.tellg());
+				in.seekg(0, std::ios::beg);
+				in.read(&contents[0], contents.size());
+				in.close();
+				return(contents);
+			}
 		}
 	};
 

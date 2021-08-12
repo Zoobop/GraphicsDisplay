@@ -64,7 +64,7 @@ namespace ZM { namespace Graphics {
 		vao.Bind();
 
 		/** Generates Vertex Buffer Object and links it to vertices */
-		VertexBufferObject vbo(vertices);
+		VertexBuffer vbo(vertices);
 		/** Generates Element Buffer Object and links it to indices */
 		ElementBufferObject ebo(indices);
 

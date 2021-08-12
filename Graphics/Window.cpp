@@ -88,7 +88,7 @@ namespace ZM { namespace Graphics {
 		glEnable(GL_DEPTH_TEST);
 
 		/** Create camera object */
-		Camera camera(m_Width, m_Height, glm::vec3(0.0f, 1.0f, 2.0f));
+		Camera camera(m_Width, m_Height, DVector3(0.0f, 1.0f, 2.0f));
 
 
 

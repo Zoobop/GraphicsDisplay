@@ -2,11 +2,14 @@
 
 namespace ZM { namespace Graphics {
 
-	Camera::Camera(int width, int height, glm::vec3 position)
+	Camera::Camera(unsigned int width, unsigned int height, DVector3 position)
 	{
 		this->width = width;
 		this->height = height;
-		this->position = position;
+
+		this->position.x = position.x;
+		this->position.y = position.y;
+		this->position.z = position.z;
 	}
 
 	void Camera::UpdateMatrix(float FOVdeg, float nearPlane, float farPlane)

@@ -13,6 +13,7 @@ namespace ZM { namespace Graphics {
 	class Shader
 	{
 	public:
+		Shader();
 		Shader(const char* vertexPath, const char* fragmentPath);
 		~Shader();
 

@@ -37,7 +37,7 @@ namespace ZM { namespace Engine {
 			// 		floor.Draw(shaderProgram, camera);
 			// 		light.Draw(lightShader, camera);
 
-					/** Update the application every frame */
+			/** Update the application every frame */
 			OnUpdate();
 
 			/** Swap the back buffer with the front buffer */

@@ -102,7 +102,7 @@ namespace ZM { namespace Math {
 		return result;
 	}
 
-	DMatrix4 DMatrix4::Translation(const DVector3& translation)
+	DMatrix4 DMatrix4::Translate(const DVector3& translation)
 	{
 		DMatrix4 result(1.0);
 
@@ -113,7 +113,7 @@ namespace ZM { namespace Math {
 		return result;
 	}
 
-	DMatrix4 DMatrix4::Rotation(float angle, const DVector3& axis)
+	DMatrix4 DMatrix4::Rotate(float angle, const DVector3& axis)
 	{
 		DMatrix4 result(1.0f);
 

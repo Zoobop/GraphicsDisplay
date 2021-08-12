@@ -37,8 +37,8 @@ namespace ZM { namespace Math {
 		static DMatrix4 Orthographic(float left, float right, float bottom, float top, float near, float far);
 		static DMatrix4 Perspective(float fov, float aspectRatio, float near, float far);
 
-		static DMatrix4 Translation(const DVector3& translation);
-		static DMatrix4 Rotation(float angle, const DVector3& axis);
+		static DMatrix4 Translate(const DVector3& translation);
+		static DMatrix4 Rotate(float angle, const DVector3& axis);
 		static DMatrix4 Scale(const DVector3& scale);
 	};
 

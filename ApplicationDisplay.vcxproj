@@ -138,21 +138,23 @@
     <ClCompile Include="Math\DevMath.cpp" />
     <ClCompile Include="Math\DMatrix4.cpp" />
     <ClCompile Include="Math\DVector3.cpp" />
-    <ClCompile Include="Graphics\ElementBufferObject.cpp" />
+    <ClCompile Include="Graphics\ElementBuffer.cpp" />
     <ClCompile Include="Engine\DevEngine.cpp" />
     <ClCompile Include="Engine\glad.c" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math\DVector2.cpp" />
     <ClCompile Include="Math\DVector4.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
-    <ClCompile Include="Graphics\ShaderClass.cpp" />
+    <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Engine\stb.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
-    <ClCompile Include="Graphics\VertexArrayObject.cpp" />
-    <ClCompile Include="Graphics\VertexBufferObject.cpp" />
+    <ClCompile Include="Graphics\VertexArray.cpp" />
+    <ClCompile Include="Graphics\VertexBuffer.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Graphics\Shaders\basic.frag" />
+    <None Include="Graphics\Shaders\basic.vert" />
     <None Include="Graphics\Shaders\default.frag" />
     <None Include="Graphics\Shaders\default.vert" />
     <None Include="Graphics\Shaders\light.frag" />
@@ -166,16 +168,16 @@
     <ClInclude Include="Math\DevMathHelpers.h" />
     <ClInclude Include="Math\DMatrix4.h" />
     <ClInclude Include="Math\DVector3.h" />
-    <ClInclude Include="Graphics\ElementBufferObject.h" />
+    <ClInclude Include="Graphics\ElementBuffer.h" />
     <ClInclude Include="Engine\DevEngine.h" />
     <ClInclude Include="Engine\IEngineStartup.h" />
     <ClInclude Include="Math\DVector2.h" />
     <ClInclude Include="Math\DVector4.h" />
     <ClInclude Include="Graphics\Mesh.h" />
-    <ClInclude Include="Graphics\ShaderClass.h" />
+    <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Texture.h" />
-    <ClInclude Include="Graphics\VertexArrayObject.h" />
-    <ClInclude Include="Graphics\VertexBufferObject.h" />
+    <ClInclude Include="Graphics\VertexArray.h" />
+    <ClInclude Include="Graphics\VertexBuffer.h" />
     <ClInclude Include="Graphics\Window.h" />
   </ItemGroup>
   <ItemGroup>

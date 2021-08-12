@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 
-#include "VertexArrayObject.h"
-#include "ElementBufferObject.h"
+#include "VertexArray.h"
+#include "ElementBuffer.h"
 #include "Camera.h"
 #include "Texture.h"
 
@@ -52,7 +52,7 @@ namespace ZM { namespace Graphics {
 		std::vector<GLuint> indices;
 		std::vector<Texture> textures;
 
-		VertexArrayObject vao;
+		VertexArray vao;
 
 	protected:
 

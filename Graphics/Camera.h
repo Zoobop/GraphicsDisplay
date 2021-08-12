@@ -8,7 +8,11 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/vector_angle.hpp>
 
-#include "ShaderClass.h"
+#include "../Math/DVector3.h"
+
+#include "Shader.h"
+
+using namespace ZM::Math;
 
 namespace ZM { namespace Graphics {
 
@@ -16,7 +20,7 @@ namespace ZM { namespace Graphics {
 	{
 	public:
 		/** Camera constructor */
-		Camera(int width, int height, glm::vec3 position);
+		Camera(unsigned int width, unsigned int height, DVector3 position);
 
 		/** Updates and exports the camera matrix to the Vertex Shader */
 		void UpdateMatrix(float FOVdeg, float nearPlane, float farPlane);
@@ -39,8 +43,8 @@ namespace ZM { namespace Graphics {
 	protected:
 
 		/** Stores the width and height of the window */
-		int width;
-		int height;
+		unsigned int width;
+		unsigned int height;
 
 		/** Prevents the camera from jumping around when first clicking left click */
 		bool firstClick = true;
