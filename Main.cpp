@@ -1,21 +1,22 @@
-#include "DevEngine.h"
+#include "Engine/DevEngine.h"
+#include "Graphics/Camera.h"
 
-class EngineTest : public ZM::DevEngine
+class EngineTest : public ZM::Engine::DevEngine
 {
 public:
 	void OnStart() override
 	{
-		std::cout << "Start" << std::endl;
+		ENGINE_LOG("Start");
 	}
 
 	void OnUpdate() override
 	{
-		std::cout << "Update" << std::endl;
+		//ENGINE_LOG("Update");
 	}
 
 	void OnTerminate() override
 	{
-		std::cout << "Terminate" << std::endl;
+		ENGINE_LOG("Terminate");
 	}
 
 };
@@ -23,7 +24,7 @@ public:
 int main()
 {
 	EngineTest engine;
-	if (engine.ConstructViewport(800, 800, "Engine Startup Test") == ENGINE_SUCC)
+	if (engine.ConstructViewport(800, 800, "Engine Startup Test") == ENGINE_INIT_SUCC)
 		engine.EngineInitialize();
 
 	return 0;

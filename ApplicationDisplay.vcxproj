@@ -83,6 +83,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -95,6 +96,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,38 +134,49 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="DevMath.cpp" />
-    <ClCompile Include="ElementBufferObject.cpp" />
-    <ClCompile Include="DevEngine.cpp" />
-    <ClCompile Include="glad.c" />
+    <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Math\DevMath.cpp" />
+    <ClCompile Include="Math\DMatrix4.cpp" />
+    <ClCompile Include="Math\DVector3.cpp" />
+    <ClCompile Include="Graphics\ElementBufferObject.cpp" />
+    <ClCompile Include="Engine\DevEngine.cpp" />
+    <ClCompile Include="Engine\glad.c" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="ShaderClass.cpp" />
-    <ClCompile Include="stb.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="VertexArrayObject.cpp" />
-    <ClCompile Include="VertexBufferObject.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Math\DVector2.cpp" />
+    <ClCompile Include="Math\DVector4.cpp" />
+    <ClCompile Include="Graphics\Mesh.cpp" />
+    <ClCompile Include="Graphics\ShaderClass.cpp" />
+    <ClCompile Include="Engine\stb.cpp" />
+    <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Graphics\VertexArrayObject.cpp" />
+    <ClCompile Include="Graphics\VertexBufferObject.cpp" />
+    <ClCompile Include="Graphics\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag" />
-    <None Include="default.vert" />
-    <None Include="light.frag" />
-    <None Include="light.vert" />
+    <None Include="Graphics\Shaders\default.frag" />
+    <None Include="Graphics\Shaders\default.vert" />
+    <None Include="Graphics\Shaders\light.frag" />
+    <None Include="Graphics\Shaders\light.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="DevMath.h" />
-    <ClInclude Include="ElementBufferObject.h" />
-    <ClInclude Include="DevEngine.h" />
-    <ClInclude Include="IEngineStartup.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="ShaderClass.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="VertexArrayObject.h" />
-    <ClInclude Include="VertexBufferObject.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Engine\Utils\EngineUtils.h" />
+    <ClInclude Include="Engine\Utils\FileUtils.h" />
+    <ClInclude Include="Math\DevMath.h" />
+    <ClInclude Include="Math\DevMathHelpers.h" />
+    <ClInclude Include="Math\DMatrix4.h" />
+    <ClInclude Include="Math\DVector3.h" />
+    <ClInclude Include="Graphics\ElementBufferObject.h" />
+    <ClInclude Include="Engine\DevEngine.h" />
+    <ClInclude Include="Engine\IEngineStartup.h" />
+    <ClInclude Include="Math\DVector2.h" />
+    <ClInclude Include="Math\DVector4.h" />
+    <ClInclude Include="Graphics\Mesh.h" />
+    <ClInclude Include="Graphics\ShaderClass.h" />
+    <ClInclude Include="Graphics\Texture.h" />
+    <ClInclude Include="Graphics\VertexArrayObject.h" />
+    <ClInclude Include="Graphics\VertexBufferObject.h" />
+    <ClInclude Include="Graphics\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="gollum.png" />

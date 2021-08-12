@@ -12,19 +12,22 @@
 #define n_TEXTURE_DEFAULT_DIFFUSE		Texture("planks.png", TT_DIFFUSE, 0, GL_RGBA, GL_UNSIGNED_BYTE)
 #define n_TEXTURE_DEFAULT_SPECULAR		Texture("planksSpec.png", TT_SPECULAR, 1, GL_RED, GL_UNSIGNED_BYTE)
 
-class Texture
-{
-public:
+namespace ZM { namespace Graphics {
 
-	Texture(const char* image, const char* texType, GLuint slot, GLenum format, GLenum pixelType);
+	class Texture
+	{
+	public:
 
-	void TexUnit(Shader &shader, const char* uniform, GLuint unit);
-	void Bind();
-	void Unbind();
-	void Delete();
+		Texture(const char* image, const char* texType, GLuint slot, GLenum format, GLenum pixelType);
 
-public:
-	GLuint ID;
-	const char* type;
-	GLuint unit;
-};
+		void TexUnit(Shader& shader, const char* uniform, GLuint unit);
+		void Bind();
+		void Unbind();
+		void Delete();
+
+	public:
+		GLuint ID;
+		const char* type;
+		GLuint unit;
+	};
+}}
