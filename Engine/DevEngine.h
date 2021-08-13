@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Engine/Utils/EngineUtils.h"
+#include "../Engine/Utils/DebugUtils.h"
 #include "../Engine/IEngineStartup.h"
 #include "../Graphics/Window.h"
 #include "../Math/DevMath.h"
@@ -9,14 +10,6 @@ using namespace ZM::Math;
 using namespace ZM::Graphics;
 
 namespace ZM { namespace Engine {
-
-#define ENGINE_INIT_FAIL	-1
-#define ENGINE_INIT_SUCC	 0
-
-#define ENGINE_GRAPHICS_INITIALIZED				glfwInit()
-#define ENGINE_GRAPHICS_TERMINATE(viewport)		glfwDestroyWindow(viewport->window)
-
-#define SWAP_BUFFERS(screen)					glfwSwapBuffers(screen->window)
 
 //////////////////////////////////////////////////////////////////////////
 ////                          Engine Base                             ////
@@ -45,24 +38,22 @@ namespace ZM { namespace Engine {
 		/** Returns the screen color */
 		DVector4 GetScreenColor() const;
 
-	private:
-		/** Checks for when the viewport/window closes */
-		bool WindowExpired();
-
 	public:
 		/** Display screen */
 		class Window* viewport;
+		/** Main camera */
+		class Camera camera;
 
 	private:
 		/** Fill screen color */
-		DVector4 screenColor = DV_COLOR_BLACK;	
+		DVector4 screenColor = DevCOLOR_BLACK;	
 
 
 
 	/** Override interface functions */
 	public:
 		/** Function called at the start of the application before the update function */
-		virtual void OnStart() override;
+		virtual void OnInitialize() override;
 		/** Function called each frame */
 		virtual void OnUpdate() override;
 		/** Function called at the end of the application after the window should close */

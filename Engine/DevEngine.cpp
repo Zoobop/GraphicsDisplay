@@ -20,31 +20,20 @@ namespace ZM { namespace Engine {
 	void DevEngine::EngineInitialize()
 	{
 		/** Start function */
-		OnStart();
+		OnInitialize();
 
 		/** Main while loop */
-		while (!WindowExpired()) {
+		while (!viewport->WindowExpired()) {
 			/** Specify the color of the background (normalized RGB) */
-			DV_SCREEN_COLOR(screenColor);
+			DevSCREEN_COLOR(screenColor);
 			/** Clean the back buffer with the front buffer */
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			// 		/** Handles the camera controls */
-			// 		camera.Inputs(window);
-			// 		/** Updates and exports the camera matrix to the Vertex Shader */
-			// 		camera.UpdateMatrix(60.0f, 0.1f, 100.0f);
-			// 		
-			// 		floor.Draw(shaderProgram, camera);
-			// 		light.Draw(lightShader, camera);
+			viewport->Clear();
 
 			/** Update the application every frame */
 			OnUpdate();
 
-			/** Swap the back buffer with the front buffer */
-			SWAP_BUFFERS(viewport);
-
-			/** Take care of all GLFW events */
-			glfwPollEvents();
+			/** Swap the back buffer with the front buffer and take care of all GLFW events */
+			viewport->Update();
 		}
 
 		/** Application and screen termination */
@@ -65,6 +54,7 @@ namespace ZM { namespace Engine {
 			}
 			/** Initializes the viewport window */
 			if (viewport->Initialize(width, height, title) == ENGINE_INIT_SUCC) {
+				camera = Camera(width, height, DVector3::Zero());
 				ENGINE_LOG("Valid viewport for construction: Initializing viewport-");
 				return ENGINE_INIT_SUCC;
 			}
@@ -80,12 +70,12 @@ namespace ZM { namespace Engine {
 
 	unsigned int DevEngine::GetScreenWidth() const
 	{
-		return viewport->m_Width;
+		return viewport->GetScreenWidth();
 	}
 
 	unsigned int DevEngine::GetScreenHeight() const
 	{
-		return viewport->m_Height;
+		return viewport->GetScreenHeight();
 	}
 
 	DVector4 DevEngine::GetScreenColor() const
@@ -93,12 +83,7 @@ namespace ZM { namespace Engine {
 		return screenColor;
 	}
 
-	bool DevEngine::WindowExpired()
-	{
-		return glfwWindowShouldClose(viewport->window);
-	}
-
-	void DevEngine::OnStart()
+	void DevEngine::OnInitialize()
 	{
 
 	}

@@ -108,9 +108,22 @@ namespace ZM { namespace Math {
 		w = other.w;
 	}
 
+	void DVector4::operator=(const glm::vec4& other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+		w = other.w;
+	}
+
 	std::ostream& operator<<(std::ostream& stream, const DVector4& vector)
 	{
 		stream << "DVector4: (" << vector.x << ", " << vector.y << ", " << vector.z << ", " << vector.w << ")";
 		return stream;
+	}
+
+	DVector4 DVector4::Identity()
+	{
+		return DVector4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 }}

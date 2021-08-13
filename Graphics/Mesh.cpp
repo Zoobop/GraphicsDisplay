@@ -31,7 +31,12 @@ namespace ZM { namespace Graphics {
 		Initialize();
 	}
 
-	void Mesh::Draw(Shader& shader, Camera& camera)
+	Mesh::Mesh()
+	{
+
+	}
+
+	void Mesh::Draw(Shader& shader, Camera& camera, DMatrix4 matrix = DMatrix4::Identity(), DVector3 translation = DVector3::Zero(), glm::quat rotation = glm::quat(1.0f, 1.0f, 1.0f, 1.0f), DVector3 scale = DVector3::Identity())
 	{
 		shader.Activate();
 		vao.Bind();
@@ -55,6 +60,19 @@ namespace ZM { namespace Graphics {
 
 		glUniform3f(glGetUniformLocation(shader.GetShaderID(), "camPos"), camera.position.x, camera.position.y, camera.position.z);
 		camera.Matrix(shader, "camMatrix");
+
+		glm::mat4 trans(1.0f);
+		glm::mat4 rot(1.0f);
+		glm::mat4 scl(1.0f);
+
+		trans = glm::translate(trans, translation.ConvertToGLM());
+		rot = glm::mat4_cast(rotation);
+		scl = glm::scale(scl, scale.ConvertToGLM());
+
+		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "translation"), 1, GL_FALSE, glm::value_ptr(trans));
+		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "rotation"), 1, GL_FALSE, glm::value_ptr(rot));
+		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "scale"), 1, GL_FALSE, glm::value_ptr(scl));
+		shader.SetUniformMat4("model", matrix);
 
 		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
 	}
@@ -94,14 +112,14 @@ namespace ZM { namespace Graphics {
 	{
 		Vertex cubeV[] = {
 			/**  Coordinates  */
-			Vertex{glm::vec3(-0.1f, -0.1f,  0.1f)},
-			Vertex{glm::vec3(-0.1f, -0.1f, -0.1f)},
-			Vertex{glm::vec3(0.1f,  -0.1f, -0.1f)},
-			Vertex{glm::vec3(0.1f,  -0.1f,  0.1f)},
-			Vertex{glm::vec3(-0.1f,  0.1f,  0.1f)},
-			Vertex{glm::vec3(-0.1f,  0.1f, -0.1f)},
-			Vertex{glm::vec3(0.1f,   0.1f, -0.1f)},
-			Vertex{glm::vec3(0.1f,   0.1f,  0.1f)},
+			Vertex{DVector3(-0.1f, -0.1f,  0.1f)},
+			Vertex{DVector3(-0.1f, -0.1f, -0.1f)},
+			Vertex{DVector3(0.1f,  -0.1f, -0.1f)},
+			Vertex{DVector3(0.1f,  -0.1f,  0.1f)},
+			Vertex{DVector3(-0.1f,  0.1f,  0.1f)},
+			Vertex{DVector3(-0.1f,  0.1f, -0.1f)},
+			Vertex{DVector3(0.1f,   0.1f, -0.1f)},
+			Vertex{DVector3(0.1f,   0.1f,  0.1f)},
 		};
 		GLuint cubeI[] = {
 			0, 1, 2,
@@ -128,10 +146,10 @@ namespace ZM { namespace Graphics {
 	{
 		Vertex planeV[] = {
 			/**  Coordinates     |         Colors       | Texture Coords |        Normals       */
-			Vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
-			Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
-			Vertex{glm::vec3(1.0f, 0.0f,  -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
-			Vertex{glm::vec3(1.0f, 0.0f,   1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)},
+			Vertex{DVector3(-1.0f, 0.0f,  1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(0.0f, 0.0f)},
+			Vertex{DVector3(-1.0f, 0.0f, -1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(0.0f, 1.0f)},
+			Vertex{DVector3(1.0f, 0.0f,  -1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(1.0f, 1.0f)},
+			Vertex{DVector3(1.0f, 0.0f,   1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(1.0f, 0.0f)},
 		};
 		GLuint planeI[] = {
 			0, 1, 2,	// Bottom side
@@ -147,26 +165,26 @@ namespace ZM { namespace Graphics {
 	MeshData& MeshData::PyramidMesh()
 	{
 		Vertex pyramidV[] = {
-		Vertex{glm::vec3(-0.5f, 0.0f, 0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(-1.0f, 0.0f)}, // Bottom side
-		Vertex{glm::vec3(-0.5f, 0.0f, -0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(0.0f, 5.0f, 0.0f), glm::vec2(-1.0f, 0.0f)}, // Bottom side
-		Vertex{glm::vec3(0.5f, 0.0f, -0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(5.0f, 5.0f, 0.0f), glm::vec2(-1.0f, 0.0f)}, // Bottom side
-		Vertex{glm::vec3(0.5f, 0.0f, 0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(5.0f, 0.0f, 0.0f), glm::vec2(-1.0f, 0.0f)}, // Bottom side
+		Vertex{DVector3(-0.5f, 0.0f, 0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(0.0f, 0.0f, 0.0f), DVector2(-1.0f, 0.0f)}, // Bottom side
+		Vertex{DVector3(-0.5f, 0.0f, -0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(0.0f, 5.0f, 0.0f), DVector2(-1.0f, 0.0f)}, // Bottom side
+		Vertex{DVector3(0.5f, 0.0f, -0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(5.0f, 5.0f, 0.0f), DVector2(-1.0f, 0.0f)}, // Bottom side
+		Vertex{DVector3(0.5f, 0.0f, 0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(5.0f, 0.0f, 0.0f), DVector2(-1.0f, 0.0f)}, // Bottom side
 
-		Vertex{glm::vec3(-0.5f, 0.0f, 0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(0.0f, 0.0f, -0.8f), glm::vec2(0.5f, 0.0f)}, // Left side
-		Vertex{glm::vec3(-0.5f, 0.0f, -0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(5.0f, 0.0f, -0.8f), glm::vec2(0.5f, 0.0f)}, // Left side
-		Vertex{glm::vec3(0.0f, 0.8f, 0.0f), glm::vec3(0.92f, 0.86f, 0.76f), glm::vec3(2.5f, 5.0f, -0.8f), glm::vec2(0.5f, 0.0f)}, // Left side
+		Vertex{DVector3(-0.5f, 0.0f, 0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(0.0f, 0.0f, -0.8f), DVector2(0.5f, 0.0f)}, // Left side
+		Vertex{DVector3(-0.5f, 0.0f, -0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(5.0f, 0.0f, -0.8f), DVector2(0.5f, 0.0f)}, // Left side
+		Vertex{DVector3(0.0f, 0.8f, 0.0f), DVector3(0.92f, 0.86f, 0.76f), DVector3(2.5f, 5.0f, -0.8f), DVector2(0.5f, 0.0f)}, // Left side
 
-		Vertex{glm::vec3(-0.5f, 0.0f, -0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(5.0f, 0.0f, 0.0f), glm::vec2(0.5f, -0.8f)}, // Non-facing side
-		Vertex{glm::vec3(0.5f, 0.0f, -0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.5f, -0.8f)}, // Non-facing side
-		Vertex{glm::vec3(0.0f, 0.8f, 0.0f), glm::vec3(0.92f, 0.86f, 0.76f), glm::vec3(2.5f, 5.0f, 0.0f), glm::vec2(0.5f, -0.8f)}, // Non-facing side
+		Vertex{DVector3(-0.5f, 0.0f, -0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(5.0f, 0.0f, 0.0f), DVector2(0.5f, -0.8f)}, // Non-facing side
+		Vertex{DVector3(0.5f, 0.0f, -0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(0.0f, 0.0f, 0.0f), DVector2(0.5f, -0.8f)}, // Non-facing side
+		Vertex{DVector3(0.0f, 0.8f, 0.0f), DVector3(0.92f, 0.86f, 0.76f), DVector3(2.5f, 5.0f, 0.0f), DVector2(0.5f, -0.8f)}, // Non-facing side
 
-		Vertex{glm::vec3(0.5f, 0.0f, -0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(0.0f, 0.0f, 0.8f), glm::vec2(0.5f, 0.0f)}, // Right side
-		Vertex{glm::vec3(0.5f, 0.0f, 0.5f), glm::vec3(0.83f, 0.70f, 0.44f), glm::vec3(5.0f, 0.0f, 0.8f), glm::vec2(0.5f, 0.0f)}, // Right side
-		Vertex{glm::vec3(0.0f, 0.8f, 0.0f), glm::vec3(0.92f, 0.86f, 0.76f), glm::vec3(2.5f, 5.0f, 0.8f), glm::vec2(0.5f, 0.0f)}, // Right side
+		Vertex{DVector3(0.5f, 0.0f, -0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(0.0f, 0.0f, 0.8f), DVector2(0.5f, 0.0f)}, // Right side
+		Vertex{DVector3(0.5f, 0.0f, 0.5f), DVector3(0.83f, 0.70f, 0.44f), DVector3(5.0f, 0.0f, 0.8f), DVector2(0.5f, 0.0f)}, // Right side
+		Vertex{DVector3(0.0f, 0.8f, 0.0f), DVector3(0.92f, 0.86f, 0.76f), DVector3(2.5f, 5.0f, 0.8f), DVector2(0.5f, 0.0f)}, // Right side
 
-		Vertex{glm::vec3(0.5f, 0.0f, 0.5f), glm::vec3(0.92f, 0.86f, 0.76f), glm::vec3(5.0f, 0.0f, 0.0f), glm::vec2(0.5f, 0.8f)}, // Facing side
-		Vertex{glm::vec3(-0.5f, 0.0f, 0.5f), glm::vec3(0.92f, 0.86f, 0.76f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(0.5f, 0.8f)}, // Facing side
-		Vertex{glm::vec3(0.0f, 0.8f, 0.0f), glm::vec3(0.92f, 0.86f, 0.76f), glm::vec3(2.5f, 5.0f, 0.0f), glm::vec2(0.5f, 0.8f)}, // Facing side
+		Vertex{DVector3(0.5f, 0.0f, 0.5f), DVector3(0.92f, 0.86f, 0.76f), DVector3(5.0f, 0.0f, 0.0f), DVector2(0.5f, 0.8f)}, // Facing side
+		Vertex{DVector3(-0.5f, 0.0f, 0.5f), DVector3(0.92f, 0.86f, 0.76f), DVector3(0.0f, 0.0f, 0.0f), DVector2(0.5f, 0.8f)}, // Facing side
+		Vertex{DVector3(0.0f, 0.8f, 0.0f), DVector3(0.92f, 0.86f, 0.76f), DVector3(2.5f, 5.0f, 0.0f), DVector2(0.5f, 0.8f)}, // Facing side
 		};
 		GLuint pyramidI[] = {
 			0, 1, 2,	// Bottom side

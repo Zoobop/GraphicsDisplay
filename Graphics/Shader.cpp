@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include <glm/gtc/type_ptr.inl>
 
 namespace ZM { namespace Graphics {
 
@@ -55,6 +56,28 @@ namespace ZM { namespace Graphics {
 		}
 	}
 
+	void Shader::SetUniformVec2(const char* uniform, DVector2 vector)
+	{
+		glUniform2f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y);
+	}
+
+	void Shader::SetUniformVec3(const char* uniform, DVector3 vector)
+	{
+		glUniform3f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z);
+	}
+
+	void Shader::SetUniformVec4(const char* uniform, DVector4 vector)
+	{
+		glUniform4f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z, vector.w);
+	}
+
+	void Shader::SetUniformMat4(const char* uniform, DMatrix4 matrix)
+	{
+		glm::mat4 converted = matrix.ConvertToGLM();
+
+		glUniformMatrix4fv(glGetUniformLocation(m_ShaderID, uniform), 1, GL_FALSE, glm::value_ptr(converted));
+	}
+
 	void Shader::Load()
 	{
 		std::string vertexCode = FileUtils::GetFileContents(m_VertexPath);
@@ -86,7 +109,6 @@ namespace ZM { namespace Graphics {
 		glAttachShader(m_ShaderID, fragmentShader);
 		/** Wrap-up/Link all the shaders together into the Shader Program */
 		glLinkProgram(m_ShaderID);
-		glValidateProgram(m_ShaderID);
 		CompileErrors(m_ShaderID, "PROGRAM");
 
 		/** Delete the now useless Vertex and Fragment Shader objects */

@@ -15,6 +15,13 @@ namespace ZM { namespace Math {
 		}
 	}
 
+	DMatrix4::DMatrix4(const float* values)
+	{
+		for (auto i = 0; i < 4 * 4; i++) {
+			elements[i] = values[i];
+		}
+	}
+
 	DMatrix4::DMatrix4(float diagonal)
 	{
 		for (auto i = 0; i < 4 * 4; i++) {
@@ -56,6 +63,23 @@ namespace ZM { namespace Math {
 	DMatrix4& DMatrix4::operator*=(const DMatrix4& other)
 	{
 		return multiply(other);
+	}
+
+	void DMatrix4::operator=(const DMatrix4& other)
+	{
+		for (auto i = 0; i < 4 * 4; i++) {
+			this->elements[i] = other.elements[i];
+		}
+	}
+
+	glm::mat4 DMatrix4::ConvertToGLM()
+	{
+		return glm::mat4(
+			elements[0], elements[1], elements[2], elements[3],
+			elements[4], elements[5], elements[6], elements[7],
+			elements[8], elements[9], elements[10], elements[11],
+			elements[12], elements[13], elements[14], elements[15]
+		);
 	}
 
 	//////////////////--------- Static Functions ---------////////////////////

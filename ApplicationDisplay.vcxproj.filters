@@ -72,6 +72,12 @@
     <ClCompile Include="Math\DMatrix4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\DQuaternion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Graphics\Shaders\default.vert">
@@ -87,10 +93,10 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="Graphics\Shaders\basic.vert">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Source Files</Filter>
     </None>
     <None Include="Graphics\Shaders\basic.frag">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +152,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Utils\FileUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utils\DebugUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\DQuaternion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

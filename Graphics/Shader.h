@@ -5,10 +5,14 @@
 #include <iostream>
 
 #include "../Engine/Utils/FileUtils.h"
+#include "../Math/DevMath.h"
 
 using namespace ZM::Utils;
+using namespace ZM::Math;
 
 namespace ZM { namespace Graphics {
+
+#define SHADER_FILE_PATH "Graphics/Shaders/"
 
 	class Shader
 	{
@@ -23,6 +27,12 @@ namespace ZM { namespace Graphics {
 		void Delete();
 
 		void CompileErrors(unsigned int shader, const char* type);
+
+		void SetUniformVec2(const char* uniform, DVector2 vector);
+		void SetUniformVec3(const char* uniform, DVector3 vector);
+		void SetUniformVec4(const char* uniform, DVector4 vector);
+
+		void SetUniformMat4(const char* uniform, DMatrix4 matrix);
 
 	private:
 		void Load();

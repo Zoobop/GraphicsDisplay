@@ -84,6 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -97,6 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,8 +137,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\Model.cpp" />
     <ClCompile Include="Math\DevMath.cpp" />
     <ClCompile Include="Math\DMatrix4.cpp" />
+    <ClCompile Include="Math\DQuaternion.cpp" />
     <ClCompile Include="Math\DVector3.cpp" />
     <ClCompile Include="Graphics\ElementBuffer.cpp" />
     <ClCompile Include="Engine\DevEngine.cpp" />
@@ -161,12 +165,15 @@
     <None Include="Graphics\Shaders\light.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Utils\DebugUtils.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Engine\Utils\EngineUtils.h" />
     <ClInclude Include="Engine\Utils\FileUtils.h" />
+    <ClInclude Include="Graphics\Model.h" />
     <ClInclude Include="Math\DevMath.h" />
     <ClInclude Include="Math\DevMathHelpers.h" />
     <ClInclude Include="Math\DMatrix4.h" />
+    <ClInclude Include="Math\DQuaternion.h" />
     <ClInclude Include="Math\DVector3.h" />
     <ClInclude Include="Graphics\ElementBuffer.h" />
     <ClInclude Include="Engine\DevEngine.h" />

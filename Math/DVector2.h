@@ -36,6 +36,7 @@ namespace ZM { namespace Math {
 
 		friend std::ostream& operator<<(std::ostream& stream, const DVector2& vector);
 
+		static DVector2 Identity();
 	};
 
 }}

@@ -12,6 +12,11 @@ namespace ZM { namespace Graphics {
 		this->position.z = position.z;
 	}
 
+	Camera::Camera()
+	{
+
+	}
+
 	void Camera::UpdateMatrix(float FOVdeg, float nearPlane, float farPlane)
 	{
 		glm::mat4 view = glm::mat4(1.0f);
@@ -28,50 +33,50 @@ namespace ZM { namespace Graphics {
 		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), uniform), 1, GL_FALSE, glm::value_ptr(cameraMatrix));
 	}
 
-	void Camera::Inputs(GLFWwindow* window)
+	void Camera::Inputs(GLFWwindow* m_Window)
 	{
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		if (glfwGetKey(m_Window, GLFW_KEY_W) == GLFW_PRESS) {
 			position += speed * orientation;
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		if (glfwGetKey(m_Window, GLFW_KEY_A) == GLFW_PRESS) {
 			position += speed * -glm::normalize(glm::cross(orientation, up));
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		if (glfwGetKey(m_Window, GLFW_KEY_S) == GLFW_PRESS) {
 			position += speed * -orientation;
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		if (glfwGetKey(m_Window, GLFW_KEY_D) == GLFW_PRESS) {
 			position += speed * glm::normalize(glm::cross(orientation, up));
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		if (glfwGetKey(m_Window, GLFW_KEY_SPACE) == GLFW_PRESS) {
 			position += speed * up;
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+		if (glfwGetKey(m_Window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
 			position += speed * -up;
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+		if (glfwGetKey(m_Window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
 			speed = fastSpeed;
 		}
-		else if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_RELEASE) {
+		else if (glfwGetKey(m_Window, GLFW_KEY_LEFT_CONTROL) == GLFW_RELEASE) {
 			speed = defaultSpeed;
 		}
 
-		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		if (glfwGetMouseButton(m_Window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 			if (firstClick) {
-				glfwSetCursorPos(window, (width / 2), (height / 2));
+				glfwSetCursorPos(m_Window, (width / 2), (height / 2));
 				firstClick = false;
 			}
 
 			double mouseX;
 			double mouseY;
-			glfwGetCursorPos(window, &mouseX, &mouseY);
+			glfwGetCursorPos(m_Window, &mouseX, &mouseY);
 
 			float rotX = sensitivity * (float)(mouseY - (height / 2)) / height;
 			float rotY = sensitivity * (float)(mouseX - (height / 2)) / height;
@@ -84,11 +89,11 @@ namespace ZM { namespace Graphics {
 
 			orientation = glm::rotate(orientation, glm::radians(-rotY), up);
 
-			glfwSetCursorPos(window, (width / 2), (height / 2));
+			glfwSetCursorPos(m_Window, (width / 2), (height / 2));
 
 		}
-		else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		else if (glfwGetMouseButton(m_Window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 			firstClick = true;
 		}
 	}

@@ -18,19 +18,24 @@ out vec3 color;
 /** Outputs the texture coordinates of the Fragment Shader */
 out vec2 texCoord;
 
+/** Imports the camera matrix from the main function */
 uniform mat4 camMatrix;
+/** Imports the model matrix from the main function */
 uniform mat4 model;
+uniform mat4 translation;
+uniform mat4 rotation;
+uniform mat4 scale;
 
 void main()
 {
 	/** Calculates current position */
-	currentPos = vec3(model * vec4(aPos, 1.0f));
+	currentPos = vec3(model * translation * -rotation * scale * vec4(aPos, 1.0f));
 	/** Assigns the normal from the Vertex Data to "normal" */
 	normal = aNormal;
 	/** Assigns the colors from the Vertex Data to "color" */
 	color = aColor;
 	/** Assigns the texture coordinates from the Vertex Data to "texCoord" */
-	texCoord = aTex;
+	texCoord = mat2(0.0f, -1.0f, 1.0f, 0.0f) * aTex;
 	/** Outputs the positions/coordinates of all vertices */
 	gl_Position = camMatrix * vec4(currentPos, 1.0);
 };

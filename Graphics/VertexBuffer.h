@@ -5,14 +5,19 @@
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 
+#include "../Math/DVector2.h"
+#include "../Math/DVector3.h"
+
+using namespace ZM::Math;
+
 namespace ZM { namespace Graphics {
 
 	struct Vertex
 	{
-		glm::vec3 position;
-		glm::vec3 normal;
-		glm::vec3 color;
-		glm::vec2 texUV;
+		DVector3 position;
+		DVector3 normal;
+		DVector3 color;
+		DVector2 texUV;
 	};
 
 	class VertexBuffer

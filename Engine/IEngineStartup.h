@@ -4,7 +4,7 @@ namespace ZM { namespace Engine {
 
 	__interface IEngineStartup
 	{
-		virtual void OnStart();
+		virtual void OnInitialize();
 
 		virtual void OnUpdate();
 

@@ -102,10 +102,32 @@ namespace ZM { namespace Math {
 		z = other.z;
 	}
 
+	void DVector3::operator=(const glm::vec3& other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+	}
+
 	std::ostream& operator<<(std::ostream& stream, const DVector3& vector)
 	{
 		stream << "DVector3: (" << vector.x << ", " << vector.y << ", " << vector.z << ")";
 		return stream;
+	}
+
+	glm::vec3 DVector3::ConvertToGLM()
+	{
+		return glm::vec3(x, y, z);
+	}
+
+	DVector3 DVector3::Zero()
+	{
+		return DVector3(0.0f, 0.0f, 0.0f);
+	}
+
+	DVector3 DVector3::Identity()
+	{
+		return DVector3(1.0f, 1.0f, 1.0f);
 	}
 
 }}

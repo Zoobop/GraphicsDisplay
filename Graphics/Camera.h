@@ -20,13 +20,14 @@ namespace ZM { namespace Graphics {
 	{
 	public:
 		/** Camera constructor */
+		Camera();
 		Camera(unsigned int width, unsigned int height, DVector3 position);
 
 		/** Updates and exports the camera matrix to the Vertex Shader */
 		void UpdateMatrix(float FOVdeg, float nearPlane, float farPlane);
 		void Matrix(Shader& shader, const char* uniform);
 		/** Handles the camera controls */
-		void Inputs(GLFWwindow* window);
+		void Inputs(GLFWwindow* m_Window);
 
 	public:
 

@@ -21,6 +21,7 @@ namespace ZM { namespace Utils {
 				in.close();
 				return(contents);
 			}
+			throw(errno);
 		}
 	};
 

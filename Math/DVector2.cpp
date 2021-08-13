@@ -102,4 +102,9 @@ namespace ZM { namespace Math {
 		return stream;
 	}
 
+	DVector2 DVector2::Identity()
+	{
+		return DVector2(1.0f, 1.0f);
+	}
+
 }}

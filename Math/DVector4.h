@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <glm/glm.hpp>
 
 namespace ZM { namespace Math {
 
@@ -33,8 +34,11 @@ namespace ZM { namespace Math {
 		bool operator==(const DVector4& other);
 
 		void operator=(const DVector4& other);
+		void operator=(const glm::vec4& other);
 
 		friend std::ostream& operator<<(std::ostream& stream, const DVector4& vector);
+
+		static DVector4 Identity();
 	};
 
 }}

@@ -20,6 +20,7 @@ namespace ZM { namespace Math {
 
 		/** Constructors */
 		DMatrix4();
+		DMatrix4(const float* values);
 		DMatrix4(float diagonal);
 
 
@@ -31,6 +32,12 @@ namespace ZM { namespace Math {
 
 		DMatrix4& operator*=(const DMatrix4& other);
 
+		void operator=(const DMatrix4& other);
+
+
+		/** Conversions to GLM */
+		glm::mat4 ConvertToGLM();
+
 
 		/** Static Functions */
 		static DMatrix4 Identity();
@@ -38,7 +45,9 @@ namespace ZM { namespace Math {
 		static DMatrix4 Perspective(float fov, float aspectRatio, float near, float far);
 
 		static DMatrix4 Translate(const DVector3& translation);
+
 		static DMatrix4 Rotate(float angle, const DVector3& axis);
+
 		static DMatrix4 Scale(const DVector3& scale);
 	};
 
