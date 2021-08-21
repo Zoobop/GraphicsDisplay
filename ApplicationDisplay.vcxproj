@@ -72,10 +72,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>C:\Users\Admin\Documents\GitHub\GraphicsDisplay\Libraries\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Admin\Documents\GitHub\GraphicsDisplay\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Users\Admin\Documents\GitHub\GraphicsDisplay\Libraries\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Admin\Documents\GitHub\GraphicsDisplay\Libraries\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -186,8 +188,10 @@
     <ClInclude Include="Graphics\VertexArray.h" />
     <ClInclude Include="Graphics\VertexBuffer.h" />
     <ClInclude Include="Graphics\Window.h" />
+    <ClInclude Include="Math\IDevMathComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\Downloads\Sword_Texture.jpeg" />
     <Image Include="gollum.png" />
     <Image Include="planks.png" />
     <Image Include="planksSpec.png" />

@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include "VertexBuffer.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	class VertexArray
 	{
@@ -18,4 +18,4 @@ namespace ZM { namespace Graphics {
 		void Delete();
 
 	};
-}}
+}

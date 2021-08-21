@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	Texture::Texture(const char* image, const char* texType, GLuint slot)
 	{
@@ -108,4 +108,4 @@ namespace ZM { namespace Graphics {
 	{
 		glDeleteTextures(1, &ID);
 	}
-}}
+}

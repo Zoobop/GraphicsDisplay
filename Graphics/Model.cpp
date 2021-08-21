@@ -1,7 +1,7 @@
 #include "Model.h"
 #include "../Engine/Utils/FileUtils.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	Model::Model(const char* filePath)
 	{
@@ -14,7 +14,11 @@ namespace ZM { namespace Graphics {
 
 	void Model::Draw(Shader& shader, Camera& camera)
 	{
-
+		// Go over all meshes and draw each one
+		for (unsigned int i = 0; i < m_LoadedMeshes.size(); i++)
+		{
+			m_LoadedMeshes[i].Mesh::Draw(shader, camera, m_MatricesMeshes[i]);
+		}
 	}
 
 	void Model::LoadMesh(unsigned int indMesh)
@@ -53,10 +57,10 @@ namespace ZM { namespace Graphics {
 				transValues[i] = (node["translation"][i]);
 			}
 
-			translation = glm::make_vec3(transValues);
+			translation = DVector3::Make(transValues);
 		}
 
-		glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+		DQuaternion rotation = DQuaternion(1.0f, 0.0f, 0.0f, 0.0f);
 		if (node.find("rotation") != node.end()) {
 
 			float rotValues[4] = {
@@ -66,7 +70,7 @@ namespace ZM { namespace Graphics {
 				node["rotation"][1],
 				node["rotation"][2],
 			};
-			rotation = glm::make_quat(rotValues);
+			rotation = DQuaternion(rotValues);
 		}
 
 		DVector3 scale = DVector3::Identity();
@@ -78,7 +82,7 @@ namespace ZM { namespace Graphics {
 				scaleValues[i] = (node["scale"][i]);
 			}
 
-			scale = glm::make_vec3(scaleValues);
+			scale = DVector3::Make(scaleValues);
 		}
 
 		DMatrix4 matNode(1.0f);
@@ -90,18 +94,14 @@ namespace ZM { namespace Graphics {
 				matValues[i] = (node["matrix"][i]);
 			}
 
-			matNode = DMatrix4(matValues);
+			matNode = DMatrix4::Make(matValues);
 		}
 
-		DMatrix4 trans(1.0f);
-		glm::mat4 rot(1.0f);
-		DMatrix4 scl(1.0f);
+		DMatrix4 trans = DMatrix4::Translate(translation);
+		DMatrix4 rot = DMatrix4::FromQuat(rotation);
+		DMatrix4 scl = DMatrix4::Scale(scale);
 
-		trans = DMatrix4::Translate(translation);
-		rot = glm::mat4_cast(rotation);
-		scl = DMatrix4::Scale(scale);
-
-		glm::mat4 matNextNode = matrix.ConvertToGLM() * matNode.ConvertToGLM() * trans.ConvertToGLM() * rot * scl.ConvertToGLM();
+		DMatrix4 matNextNode = matrix * matNode * trans * rot * scl;
 
 		if (node.find("mesh") != node.end()) {
 
@@ -117,7 +117,7 @@ namespace ZM { namespace Graphics {
 
 			for (unsigned int i = 0; i < node["children"].size(); i++) {
 
-				//TraverseNode(node["children"][i], matNextNode);
+				TraverseNode(node["children"][i], matNextNode);
 			}
 		}
 	}
@@ -240,19 +240,21 @@ namespace ZM { namespace Graphics {
 			if (!skip) {
 
 				if (texPath.find("baseColor") != std::string::npos) {
-					Texture diffuse = Texture((fileDirectory + texPath).c_str(), "diffuse", m_LoadedTex.size());
+					Texture diffuse = Texture((fileDirectory + texPath).c_str(), "diffuse", (GLuint)m_LoadedTex.size());
 					textures.push_back(diffuse);
 					m_LoadedTex.push_back(diffuse);
 					m_LoadedTexNames.push_back(texPath);
 				}
 				else if (texPath.find("metallicRoughness") != std::string::npos) {
-					Texture specular = Texture((fileDirectory + texPath).c_str(), "specular", m_LoadedTex.size());
+					Texture specular = Texture((fileDirectory + texPath).c_str(), "specular", (GLuint)m_LoadedTex.size());
 					textures.push_back(specular);
 					m_LoadedTex.push_back(specular);
 					m_LoadedTexNames.push_back(texPath);
 				}
 			}
 		}
+
+		return textures;
 	}
 
 	std::vector<Vertex> Model::AssembleVertices(std::vector<DVector3> positions, std::vector<DVector3> normals, std::vector<DVector2> texUVs)
@@ -308,4 +310,4 @@ namespace ZM { namespace Graphics {
 		return vectors;
 	}
 
-}}
+}

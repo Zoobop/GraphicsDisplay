@@ -1,9 +1,10 @@
 #include "Shader.h"
 #include <glm/gtc/type_ptr.inl>
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
-	Shader::Shader(const char* vertexPath, const char* fragmentPath) : m_VertexPath(vertexPath), m_FragmentPath(fragmentPath)
+	Shader::Shader(const char* vertexPath, const char* fragmentPath) 
+		: m_VertexPath(vertexPath), m_FragmentPath(fragmentPath)
 	{
 		Load();
 	}
@@ -56,22 +57,22 @@ namespace ZM { namespace Graphics {
 		}
 	}
 
-	void Shader::SetUniformVec2(const char* uniform, DVector2 vector)
+	void Shader::SetUniformVec2(const char* uniform, const DVector2& vector)
 	{
 		glUniform2f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y);
 	}
 
-	void Shader::SetUniformVec3(const char* uniform, DVector3 vector)
+	void Shader::SetUniformVec3(const char* uniform, const DVector3& vector)
 	{
 		glUniform3f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z);
 	}
 
-	void Shader::SetUniformVec4(const char* uniform, DVector4 vector)
+	void Shader::SetUniformVec4(const char* uniform, const DVector4& vector)
 	{
 		glUniform4f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z, vector.w);
 	}
 
-	void Shader::SetUniformMat4(const char* uniform, DMatrix4 matrix)
+	void Shader::SetUniformMat4(const char* uniform, DMatrix4& matrix)
 	{
 		glm::mat4 converted = matrix.ConvertToGLM();
 
@@ -116,4 +117,4 @@ namespace ZM { namespace Graphics {
 		glDeleteShader(fragmentShader);
 	}
 
-}}
+}

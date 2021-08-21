@@ -4,7 +4,7 @@
 
 #include "../Math/DMatrix4.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	void ResizeWindow(GLFWwindow* window, int width, int height);
 	void OnMouseCursorMoved(GLFWwindow* window, double xPos, double yPos);
@@ -94,14 +94,14 @@ namespace ZM { namespace Graphics {
   		objectModel = glm::translate(objectModel, objectPos);
   
   		/** Texture */
-  		Texture textures[]{
-  			Texture("planks.png", TT_DIFFUSE, 0, GL_RGBA, GL_UNSIGNED_BYTE),
-  			Texture("planksSpec.png", TT_SPECULAR, 1, GL_RED, GL_UNSIGNED_BYTE),
+  		Texture m_Textures[]{
+  			Texture("planks.png", TT_DIFFUSE, 0),
+  			Texture("planksSpec.png", TT_SPECULAR, 1),
   		};
   
   		/** Generates Shader object using shaders default.vert and default.frag */
   		shaderProgram = Shader("Graphics/Shaders/default.vert", "Graphics/Shaders/default.frag");
-  		std::vector<Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
+  		std::vector<Texture> tex(m_Textures, m_Textures + sizeof(m_Textures) / sizeof(Texture));
   		//Mesh floor(verts, ind, tex);
   		Mesh floor(MESH_PLANE, tex);
   
@@ -190,4 +190,4 @@ namespace ZM { namespace Graphics {
 		screen->m_MouseY = yPos;
 	}
 
-}}
+}

@@ -1,6 +1,9 @@
 #include "DMatrix4.h"
+#include <glm/ext/quaternion_float.hpp>
+#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/quaternion.hpp>
 
-namespace ZM { namespace Math {
+namespace DevEngine::Math {
 
 	//////////////////////////////////////////////////////////////////////////
 	////                            4x4 Matrix                            ////
@@ -32,6 +35,17 @@ namespace ZM { namespace Math {
 		elements[1 + 1 * 4] = diagonal;
 		elements[2 + 2 * 4] = diagonal;
 		elements[3 + 3 * 4] = diagonal;
+	}
+
+	DMatrix4::DMatrix4(const DQuaternion& quaternion)
+	{
+		glm::quat converted(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+
+		glm::mat4 matrix = glm::mat4_cast(converted);
+		
+		for (unsigned int i = 0; i < 4 * 4; i++) {
+			this->elements[i] = matrix[i / 4][i % 4];
+		}
 	}
 
 	//////////////////--------- Helper Functions ---------////////////////////
@@ -71,6 +85,15 @@ namespace ZM { namespace Math {
 			this->elements[i] = other.elements[i];
 		}
 	}
+
+	void DMatrix4::operator=(const glm::mat<4, 4, glm::f32, glm::packed_highp>& other)
+	{
+		for (unsigned int i = 0; i < 4 * 4; i++) {
+			this->elements[i] = other[i / 4][i % 4];
+		}
+	}
+
+	//////////////////---------- GLM Conversions ----------////////////////////
 
 	glm::mat4 DMatrix4::ConvertToGLM()
 	{
@@ -172,4 +195,23 @@ namespace ZM { namespace Math {
 		return result;
 	}
 
-}}
+	DMatrix4 DMatrix4::FromQuat(const DQuaternion& quaternion)
+	{
+		glm::quat converted(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+
+		glm::mat4 glmMatrix = glm::mat4_cast(converted);
+
+		DMatrix4 matrix(1.0f);
+		for (unsigned int i = 0; i < 4; i++) {
+			matrix.elements[i] = glmMatrix[i / 4][i % 4];
+		}
+
+		return matrix;
+	}
+
+	DMatrix4 DMatrix4::Make(const float* values)
+	{
+		return DMatrix4(values);
+	}
+
+}
