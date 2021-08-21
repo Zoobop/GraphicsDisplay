@@ -1,33 +1,27 @@
 #include "Mesh.h"
+#include "../Engine/Utils/DebugUtils.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	Mesh::Mesh(MeshData& meshData)
+		: m_Indices(meshData.meshI), m_Vertices(meshData.meshV)
 	{
 		Texture textures[] = { n_TEXTURE_DEFAULT_DIFFUSE, n_TEXTURE_DEFAULT_SPECULAR };
 
-		Mesh::textures = std::vector<Texture>(textures, textures + sizeof(textures) / sizeof(Texture));
-		Mesh::vertices = meshData.meshV;
-		Mesh::indices = meshData.meshI;
+		m_Textures = std::vector<Texture>(textures, textures + sizeof(textures) / sizeof(Texture));
 
 		Initialize();
 	}
 
 	Mesh::Mesh(MeshData& meshData, std::vector<Texture>& textures)
+		: m_Indices(meshData.meshI), m_Vertices(meshData.meshV), m_Textures(textures)
 	{
-		Mesh::textures = textures;
-		Mesh::vertices = meshData.meshV;
-		Mesh::indices = meshData.meshI;
-
 		Initialize();
 	}
 
 	Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures)
+		: m_Vertices(vertices), m_Indices(indices), m_Textures(textures)
 	{
-		Mesh::vertices = vertices;
-		Mesh::indices = indices;
-		Mesh::textures = textures;
-
 		Initialize();
 	}
 
@@ -36,63 +30,67 @@ namespace ZM { namespace Graphics {
 
 	}
 
-	void Mesh::Draw(Shader& shader, Camera& camera, DMatrix4 matrix, DVector3 translation, glm::quat rotation, DVector3 scale)
+	void Mesh::Draw
+	(
+		Shader& shader,
+		Camera& camera, 
+		DMatrix4 matrix, 
+		DVector3 translation, 
+		DQuaternion rotation, 
+		DVector3 scale
+	)
 	{
 		shader.Activate();
-		vao.Bind();
+		m_VAO.Bind();
 
 		unsigned int numDiffuse = 0;
 		unsigned int numSpecular = 0;
 
-		for (unsigned int i = 0; i < textures.size(); i++) {
+		for (unsigned int i = 0; i < m_Textures.size(); i++) {
 
 			std::string num;
-			std::string type = textures[i].type;
+			std::string type = m_Textures[i].type;
 			if (type == "diffuse") {
 				num = std::to_string(numDiffuse++);
 			}
 			else if (type == "specular") {
 				num = std::to_string(numSpecular++);
 			}
-			textures[i].TexUnit(shader, (type + num).c_str(), i);
-			textures[i].Bind();
+			m_Textures[i].TexUnit(shader, (type + num).c_str(), i);
+			m_Textures[i].Bind();
 		}
 
-		glUniform3f(glGetUniformLocation(shader.GetShaderID(), "camPos"), camera.position.x, camera.position.y, camera.position.z);
+		shader.SetUniformVec3("camPos", camera.m_Position);
 		camera.Matrix(shader, "camMatrix");
 
-		glm::mat4 trans(1.0f);
-		glm::mat4 rot(1.0f);
-		glm::mat4 scl(1.0f);
+		DMatrix4 trans = DMatrix4::Translate(translation);
+		DMatrix4 rot = DMatrix4::FromQuat(rotation);
+		DMatrix4 scl = DMatrix4::Scale(scale);
 
-		trans = glm::translate(trans, translation.ConvertToGLM());
-		rot = glm::mat4_cast(rotation);
-		scl = glm::scale(scl, scale.ConvertToGLM());
-
-		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "translation"), 1, GL_FALSE, glm::value_ptr(trans));
-		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "rotation"), 1, GL_FALSE, glm::value_ptr(rot));
-		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), "scale"), 1, GL_FALSE, glm::value_ptr(scl));
+		shader.SetUniformMat4("translation", trans);
+		shader.SetUniformMat4("rotation", rot);
+		shader.SetUniformMat4("scale", scl);
 		shader.SetUniformMat4("model", matrix);
 
-		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, (GLsizei)m_Indices.size(), GL_UNSIGNED_INT, 0);
 	}
 
 	void Mesh::Initialize()
 	{
-		vao.Bind();
+		m_VAO.Bind();
 
 		/** Generates Vertex Buffer Object and links it to vertices */
-		VertexBuffer vbo(vertices);
+		VertexBuffer vbo(m_Vertices);
 		/** Generates Element Buffer Object and links it to indices */
-		ElementBufferObject ebo(indices);
+		ElementBufferObject ebo(m_Indices);
 
 		/** Links vbo to vao */
-		vao.LinkAttrib(vbo, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
-		vao.LinkAttrib(vbo, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
-		vao.LinkAttrib(vbo, 2, 3, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
-		vao.LinkAttrib(vbo, 3, 2, GL_FLOAT, sizeof(Vertex), (void*)(9 * sizeof(float)));
+		m_VAO.LinkAttrib(vbo, 0, 3, GL_FLOAT, sizeof(Vertex), (void*)0);
+		m_VAO.LinkAttrib(vbo, 1, 3, GL_FLOAT, sizeof(Vertex), (void*)(3 * sizeof(float)));
+		m_VAO.LinkAttrib(vbo, 2, 3, GL_FLOAT, sizeof(Vertex), (void*)(6 * sizeof(float)));
+		m_VAO.LinkAttrib(vbo, 3, 2, GL_FLOAT, sizeof(Vertex), (void*)(9 * sizeof(float)));
 		/** Unbind all to prevent accidentally modifying them */
-		vao.Unbind();
+		m_VAO.Unbind();
 		vbo.Unbind();
 		ebo.Unbind();
 	}
@@ -200,4 +198,4 @@ namespace ZM { namespace Graphics {
 
 		return *this;
 	}
-}}
+}

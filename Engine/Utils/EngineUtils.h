@@ -7,8 +7,8 @@
 #define ENGINE_GRAPHICS_TERMINATE(screen)		glfwDestroyWindow(screen->GetWindow())
 
 
-namespace ZM { namespace Utils {
+namespace DevEngine::Utils {
 
 
 
-}}
+}

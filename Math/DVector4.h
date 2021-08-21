@@ -2,7 +2,7 @@
 #include <iostream>
 #include <glm/glm.hpp>
 
-namespace ZM { namespace Math {
+namespace DevEngine::Math {
 
 //////////////////////////////////////////////////////////////////////////
 ////                     DevMath - 4D Vector                          ////
@@ -41,4 +41,4 @@ namespace ZM { namespace Math {
 		static DVector4 Identity();
 	};
 
-}}
+}

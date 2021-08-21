@@ -1,5 +1,5 @@
 #pragma once
-#include "Mesh.h"
+#include "Model.h"
 
 #define DevCOLOR_WHITE			DVector4(1.0f, 1.0f, 1.0f, 1.0f)
 #define DevCOLOR_BLACK			DVector4(0.0f, 0.0f, 0.0f, 0.0f)
@@ -15,7 +15,7 @@
 #define MAX_KEYS		1024
 #define MAX_BUTTONS		32
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	class Window
 	{
@@ -60,4 +60,4 @@ namespace ZM { namespace Graphics {
 	};
 
 	void ResizeWindow(GLFWwindow* window, int width, int height);
-}}
+}

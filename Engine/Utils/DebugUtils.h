@@ -10,8 +10,8 @@
 #define ENGINE_LOG(x)
 #endif
 
-namespace ZM { namespace Utils {
+namespace DevEngine::Utils {
 
 
 
-}}
+}

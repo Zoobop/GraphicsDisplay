@@ -1,7 +1,7 @@
 #include "DevEngine.h"
 #include <iostream>
 
-namespace ZM { namespace Engine {
+namespace DevEngine {
 
 	DevEngine::DevEngine()
 	{
@@ -83,18 +83,9 @@ namespace ZM { namespace Engine {
 		return screenColor;
 	}
 
-	void DevEngine::OnInitialize()
-	{
+	void DevEngine::OnInitialize(){}
 
-	}
+	void DevEngine::OnUpdate(){}
 
-	void DevEngine::OnUpdate()
-	{
-
-	}
-
-	void DevEngine::OnTerminate()
-	{
-
-	}
-}}
+	void DevEngine::OnTerminate(){}
+}
