@@ -5,7 +5,7 @@
 
 using json = nlohmann::json;
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 #define DevM_UNSIGNED_INT 5125
 #define DevM_UNSIGNED_SHORT 5123
@@ -49,4 +49,4 @@ namespace ZM { namespace Graphics {
 		std::vector<glm::mat4> m_MatricesMeshes;
 	};
 
-}}
+}

@@ -12,7 +12,7 @@
 #define n_TEXTURE_DEFAULT_DIFFUSE		Texture("planks.png", TT_DIFFUSE, 0)
 #define n_TEXTURE_DEFAULT_SPECULAR		Texture("planksSpec.png", TT_SPECULAR, 1)
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	class Texture
 	{
@@ -30,4 +30,4 @@ namespace ZM { namespace Graphics {
 		const char* type;
 		GLuint unit;
 	};
-}}
+}

@@ -7,10 +7,10 @@
 #include "../Engine/Utils/FileUtils.h"
 #include "../Math/DevMath.h"
 
-using namespace ZM::Utils;
-using namespace ZM::Math;
+using namespace DevEngine::Utils;
+using namespace DevEngine::Math;
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 #define SHADER_FILE_PATH "Graphics/Shaders/"
 
@@ -43,4 +43,4 @@ namespace ZM { namespace Graphics {
 		const char* m_FragmentPath;
 	};
 
-}}
+}

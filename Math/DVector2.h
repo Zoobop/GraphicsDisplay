@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-namespace ZM { namespace Math {
+namespace DevEngine::Math {
 
 //////////////////////////////////////////////////////////////////////////
 ////                     DevMath - 2D Vector                          ////
@@ -39,4 +39,4 @@ namespace ZM { namespace Math {
 		static DVector2 Identity();
 	};
 
-}}
+}

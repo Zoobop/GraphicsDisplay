@@ -1,11 +1,9 @@
 #include "Engine/DevEngine.h"
 #include "Graphics/Camera.h"
 
-class EngineTest : public ZM::Engine::DevEngine
+class EngineTest : public DevEngine::Engine::DevEngine
 {
 public:
-
-	Mesh floor, light;
 
 	void OnInitialize() override
 	{
@@ -25,54 +23,8 @@ public:
 
 };
 
-const unsigned int width = 800;
-const unsigned int height = 800;
-
-
-
-// Vertices coordinates
-Vertex vertices[] =
-{ //               COORDINATES           /            COLORS          /           TexCoord         /       NORMALS         //
-	Vertex{DVector3(-1.0f, 0.0f,  1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(0.0f, 0.0f)},
-	Vertex{DVector3(-1.0f, 0.0f, -1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(0.0f, 1.0f)},
-	Vertex{DVector3(1.0f, 0.0f, -1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(1.0f, 1.0f)},
-	Vertex{DVector3(1.0f, 0.0f,  1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(1.0f, 0.0f)}
-};
-
-// Indices for vertices order
-GLuint indices[] =
-{
-	0, 1, 2,
-	0, 2, 3
-};
-
-Vertex lightVertices[] =
-{ //     COORDINATES     //
-	Vertex{DVector3(-0.1f, -0.1f,  0.1f)},
-	Vertex{DVector3(-0.1f, -0.1f, -0.1f)},
-	Vertex{DVector3(0.1f, -0.1f, -0.1f)},
-	Vertex{DVector3(0.1f, -0.1f,  0.1f)},
-	Vertex{DVector3(-0.1f,  0.1f,  0.1f)},
-	Vertex{DVector3(-0.1f,  0.1f, -0.1f)},
-	Vertex{DVector3(0.1f,  0.1f, -0.1f)},
-	Vertex{DVector3(0.1f,  0.1f,  0.1f)}
-};
-
-GLuint lightIndices[] =
-{
-	0, 1, 2,
-	0, 2, 3,
-	0, 4, 7,
-	0, 7, 3,
-	3, 7, 6,
-	3, 6, 2,
-	2, 6, 5,
-	2, 5, 1,
-	1, 5, 4,
-	1, 4, 0,
-	4, 5, 6,
-	4, 6, 7
-};
+const unsigned int width = 1660;
+const unsigned int height = 1280;
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -121,28 +73,19 @@ int main()
 	// Texture data
 	Texture textures[]
 	{
-		Texture("planks.png", TT_DIFFUSE, 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		Texture("planksSpec.png", TT_SPECULAR, 1, GL_RED, GL_UNSIGNED_BYTE)
+		n_TEXTURE_DEFAULT_DIFFUSE,
+		n_TEXTURE_DEFAULT_SPECULAR
 	};
 
 
 
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("Graphics/Shaders/default.vert", "Graphics/Shaders/default.frag");
-	// Store mesh data in vectors for the mesh
-	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
-	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
-	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
-	// Create floor mesh
 	Mesh floor(MESH_PLANE);
 
 
 	// Shader for light cube
 	Shader lightShader("Graphics/Shaders/light.vert", "Graphics/Shaders/light.frag");
-	// Store mesh data in vectors for the mesh
-	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
-	std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
-	// Crate light mesh
 	Mesh light(MESH_CUBE);
 
 
@@ -150,21 +93,21 @@ int main()
 
 
 	DVector4 lightColor = DVector4::Identity();
-	DVector3 lightPos(0.5f, 0.5f, 0.5f);
-	DMatrix4 lightModel(1.0f);
-	lightModel = DMatrix4::Translate(lightModel, lightPos);
+	DVector3 lightPos(0.0f, 0.5f, 0.0f);
+	DQuaternion lightRot(1.0f, 0.0f, 0.0f, 0.0f);
+	DVector3 lightScl(1.0f, 1.0f, 1.0f);
+	DMatrix4 lightModel = DMatrix4::Translate(lightPos);
 
 	DVector3 objectPos = DVector3::Zero();
-	DMatrix4 objectModel(1.0f);
-	objectModel = DMatrix4::Translate(objectModel, objectPos);
+	DQuaternion objectRot(1.0f, 0.0f, 0.0f, 0.0f);
+	DVector3 objectScl(15.0f, 1.0f, 15.0f);
+	DMatrix4 objectModel = DMatrix4::Translate(objectPos);
 
 
 	lightShader.Activate();
-	lightShader.SetUniformMat4("model", lightModel);
 	lightShader.SetUniformVec4("lightColor", lightColor);
 
 	shaderProgram.Activate();
-	shaderProgram.SetUniformMat4("model", objectModel);
 	shaderProgram.SetUniformVec4("lightColor", lightColor);
 	shaderProgram.SetUniformVec3("lightPos", lightPos);
 
@@ -190,12 +133,12 @@ int main()
 		// Handles camera inputs
 		camera.Inputs(window);
 		// Updates and exports the camera matrix to the Vertex Shader
-		camera.UpdateMatrix(60.0f, 0.1f, 100.0f);
+		camera.UpdateMatrix(60.0f, 0.1f, 200.0f);
 
 
 		// Draws different meshes
-		floor.Draw(shaderProgram, camera);
-		light.Draw(lightShader, camera);
+		floor.Draw(shaderProgram, camera, objectModel, objectPos, objectRot, objectScl);
+		light.Draw(lightShader, camera, lightModel, lightPos, lightRot, lightScl);
 
 
 		// Swap the back buffer with the front buffer

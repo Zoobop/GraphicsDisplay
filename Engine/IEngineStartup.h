@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ZM { namespace Engine {
+namespace DevEngine::Engine {
 
 	__interface IEngineStartup
 	{
@@ -10,4 +10,4 @@ namespace ZM { namespace Engine {
 
 		virtual void OnTerminate();
 	};
-}}
+}

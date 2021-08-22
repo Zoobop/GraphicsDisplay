@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	Camera::Camera(unsigned int width, unsigned int height, DVector3 position)
 	{
@@ -97,4 +97,4 @@ namespace ZM { namespace Graphics {
 			firstClick = true;
 		}
 	}
-}}
+}

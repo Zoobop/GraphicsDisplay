@@ -1,7 +1,7 @@
 #include "Shader.h"
 #include <glm/gtc/type_ptr.inl>
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	Shader::Shader(const char* vertexPath, const char* fragmentPath) : m_VertexPath(vertexPath), m_FragmentPath(fragmentPath)
 	{
@@ -116,4 +116,4 @@ namespace ZM { namespace Graphics {
 		glDeleteShader(fragmentShader);
 	}
 
-}}
+}

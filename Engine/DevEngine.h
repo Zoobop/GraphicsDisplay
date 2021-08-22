@@ -6,10 +6,10 @@
 #include "../Graphics/Window.h"
 #include "../Math/DevMath.h"
 
-using namespace ZM::Math;
-using namespace ZM::Graphics;
+using namespace DevEngine::Math;
+using namespace DevEngine::Graphics;
 
-namespace ZM { namespace Engine {
+namespace DevEngine::Engine {
 
 //////////////////////////////////////////////////////////////////////////
 ////                          Engine Base                             ////
@@ -40,13 +40,13 @@ namespace ZM { namespace Engine {
 
 	public:
 		/** Display screen */
-		class Window* viewport;
+		class Window* m_Viewport;
 		/** Main camera */
-		class Camera camera;
+		class Camera m_MainCamera;
 
 	private:
 		/** Fill screen color */
-		DVector4 screenColor = DevCOLOR_BLACK;	
+		DVector4 m_ScreenColor = DevCOLOR_BLACK;	
 
 
 
@@ -60,5 +60,5 @@ namespace ZM { namespace Engine {
 		virtual void OnTerminate() override;
 
 	};
-}}
+}
 

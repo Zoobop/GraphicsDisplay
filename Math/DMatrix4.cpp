@@ -1,6 +1,9 @@
 #include "DMatrix4.h"
+#include <glm/ext/quaternion_float.hpp>
+#include <glm/gtc/type_ptr.inl>
+#include <glm/gtc/quaternion.hpp>
 
-namespace ZM { namespace Math {
+namespace DevEngine::Math {
 
 	//////////////////////////////////////////////////////////////////////////
 	////                            4x4 Matrix                            ////
@@ -89,6 +92,20 @@ namespace ZM { namespace Math {
 		return DMatrix4(1.0f);
 	}
 
+	DMatrix4 DMatrix4::FromQuat(DQuaternion quaternion)
+	{
+		glm::quat converted(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+
+		glm::mat4 glmMatrix = glm::mat4_cast(converted);
+
+		DMatrix4 matrix(1.0f);
+		for (unsigned int i = 0; i < 4; i++) {
+			matrix.elements[i] = glmMatrix[i / 4][i % 4];
+		}
+
+		return matrix;
+	}
+
 	DMatrix4 DMatrix4::Orthographic(float left, float right, float bottom, float top, float near, float far)
 	{
 		DMatrix4 result(1.0f);
@@ -172,4 +189,4 @@ namespace ZM { namespace Math {
 		return result;
 	}
 
-}}
+}

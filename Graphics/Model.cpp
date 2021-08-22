@@ -1,7 +1,7 @@
 #include "Model.h"
 #include "../Engine/Utils/FileUtils.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	Model::Model(const char* filePath)
 	{
@@ -240,19 +240,21 @@ namespace ZM { namespace Graphics {
 			if (!skip) {
 
 				if (texPath.find("baseColor") != std::string::npos) {
-					Texture diffuse = Texture((fileDirectory + texPath).c_str(), "diffuse", m_LoadedTex.size());
+					Texture diffuse = Texture((fileDirectory + texPath).c_str(), "diffuse", (unsigned int)m_LoadedTex.size());
 					textures.push_back(diffuse);
 					m_LoadedTex.push_back(diffuse);
 					m_LoadedTexNames.push_back(texPath);
 				}
 				else if (texPath.find("metallicRoughness") != std::string::npos) {
-					Texture specular = Texture((fileDirectory + texPath).c_str(), "specular", m_LoadedTex.size());
+					Texture specular = Texture((fileDirectory + texPath).c_str(), "specular", (unsigned int)m_LoadedTex.size());
 					textures.push_back(specular);
 					m_LoadedTex.push_back(specular);
 					m_LoadedTexNames.push_back(texPath);
 				}
 			}
 		}
+
+		return textures;
 	}
 
 	std::vector<Vertex> Model::AssembleVertices(std::vector<DVector3> positions, std::vector<DVector3> normals, std::vector<DVector2> texUVs)
@@ -308,4 +310,4 @@ namespace ZM { namespace Graphics {
 		return vectors;
 	}
 
-}}
+}

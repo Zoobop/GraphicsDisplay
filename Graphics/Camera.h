@@ -12,9 +12,9 @@
 
 #include "Shader.h"
 
-using namespace ZM::Math;
+using namespace DevEngine::Math;
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	class Camera
 	{
@@ -54,4 +54,4 @@ namespace ZM { namespace Graphics {
 		float fastSpeed = 0.04f;
 	};
 
-}}
+}

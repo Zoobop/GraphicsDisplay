@@ -1,6 +1,6 @@
 #include "VertexBuffer.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	VertexBuffer::VertexBuffer(std::vector<Vertex>& vertices)
 	{
@@ -25,4 +25,4 @@ namespace ZM { namespace Graphics {
 	{
 		glDeleteBuffers(1, &m_BufferID);
 	}
-}}
+}

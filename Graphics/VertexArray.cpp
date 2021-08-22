@@ -1,6 +1,6 @@
 #include "VertexArray.h"
 
-namespace ZM { namespace Graphics {
+namespace DevEngine::Graphics {
 
 	VertexArray::VertexArray()
 	{
@@ -30,4 +30,4 @@ namespace ZM { namespace Graphics {
 	{
 		glDeleteVertexArrays(1, &m_ArrayID);
 	}
-}}
+}
