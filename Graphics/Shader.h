@@ -32,8 +32,12 @@ namespace DevEngine::Graphics {
 		void SetUniformVec3(const char* uniform, DVector3 vector);
 		void SetUniformVec4(const char* uniform, DVector4 vector);
 
+<<<<<<< Updated upstream
 		void SetUniformMat4(const char* uniform, DMatrix4& matrix);
 		void SetUniformMat4(const char* uniform, glm::mat4 matrix);
+=======
+		void SetUniformMat4(const char* uniform, DMatrix4 matrix);
+>>>>>>> Stashed changes
 
 	private:
 		void Load();

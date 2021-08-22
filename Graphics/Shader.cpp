@@ -72,7 +72,7 @@ namespace DevEngine::Graphics {
 		glUniform4f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z, vector.w);
 	}
 
-	void Shader::SetUniformMat4(const char* uniform, DMatrix4& matrix)
+	void Shader::SetUniformMat4(const char* uniform, DMatrix4 matrix)
 	{
 		glm::mat4 converted = matrix.ConvertToGLM();
 
