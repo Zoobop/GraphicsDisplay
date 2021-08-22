@@ -81,16 +81,16 @@ int main()
 
 
 
-	DVector4 lightColor = DVector4::Identity();
-	DVector3 lightPos(0.0f, 0.5f, 0.0f);
-	DQuaternion lightRot(1.0f, 0.0f, 0.0f, 0.0f);
-	DVector3 lightScl(1.0f, 1.0f, 1.0f);
-	DMatrix4 lightModel = DMatrix4::Translate(lightPos);
+	glm::vec4 lightColor(1.0f);
+	glm::vec3 lightPos(0.0f, 0.5f, 0.0f);
+	glm::quat lightRot(1.0f, 0.0f, 0.0f, 0.0f);
+	glm::vec3 lightScl(1.0f, 1.0f, 1.0f);
+	glm::mat4 lightModel = glm::translate(lightPos);
 
-	DVector3 objectPos = DVector3::Zero();
-	DQuaternion objectRot(1.0f, 0.0f, 0.0f, 0.0f);
-	DVector3 objectScl(15.0f, 1.0f, 15.0f);
-	DMatrix4 objectModel = DMatrix4::Translate(objectPos);
+	glm::vec3 objectPos(0.0f);
+	glm::quat objectRot(1.0f, 0.0f, 0.0f, 0.0f);
+	glm::vec3 objectScl(15.0f, 1.0f, 15.0f);
+	glm::mat4 objectModel = glm::translate(objectPos);
 
 
 	lightShader.Activate();
@@ -108,7 +108,7 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// Creates camera object
-	Camera camera(width, height, DVector3(0.0f, 1.0f, 2.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 1.0f, 2.0f));
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))

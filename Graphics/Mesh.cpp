@@ -36,7 +36,7 @@ namespace DevEngine::Graphics {
 
 	}
 
-	void Mesh::Draw(Shader& shader, Camera& camera, DMatrix4 matrix, DVector3 translation, DQuaternion rotation, DVector3 scale)
+	void Mesh::Draw(Shader& shader, Camera& camera, glm::mat4 matrix, glm::vec3 translation, glm::quat rotation, glm::vec3 scale)
 	{
 		shader.Activate();
 		m_VAO.Bind();
@@ -61,9 +61,9 @@ namespace DevEngine::Graphics {
 		shader.SetUniformVec3("camPos", camera.m_Position);
 		camera.Matrix(shader, "camMatrix");
 
-		DMatrix4 trans = DMatrix4::Translate(translation);
-		DMatrix4 rot = DMatrix4::FromQuat(rotation);
-		DMatrix4 scl = DMatrix4::Scale(scale);
+		glm::mat4 trans = glm::translate(translation);
+		glm::mat4 rot = glm::mat4_cast(rotation);
+		glm::mat4 scl = glm::scale(scale);
 
 		shader.SetUniformMat4("translation", trans);
 		shader.SetUniformMat4("rotation", rot);

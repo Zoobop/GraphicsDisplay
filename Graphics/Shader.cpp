@@ -3,14 +3,14 @@
 
 namespace DevEngine::Graphics {
 
-	Shader::Shader(const char* vertexPath, const char* fragmentPath) : m_VertexPath(vertexPath), m_FragmentPath(fragmentPath)
+	Shader::Shader(const char* vertexPath, const char* fragmentPath) 
+		: m_VertexPath(vertexPath), m_FragmentPath(fragmentPath)
 	{
 		Load();
 	}
 
 	Shader::Shader()
 	{
-
 	}
 
 	Shader::~Shader()
@@ -56,26 +56,24 @@ namespace DevEngine::Graphics {
 		}
 	}
 
-	void Shader::SetUniformVec2(const char* uniform, DVector2 vector)
+	void Shader::SetUniformVec2(const char* uniform, const glm::vec2& vector)
 	{
 		glUniform2f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y);
 	}
 
-	void Shader::SetUniformVec3(const char* uniform, DVector3 vector)
+	void Shader::SetUniformVec3(const char* uniform, const glm::vec3& vector)
 	{
 		glUniform3f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z);
 	}
 
-	void Shader::SetUniformVec4(const char* uniform, DVector4 vector)
+	void Shader::SetUniformVec4(const char* uniform, const glm::vec4& vector)
 	{
 		glUniform4f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z, vector.w);
 	}
 
-	void Shader::SetUniformMat4(const char* uniform, DMatrix4 matrix)
+	void Shader::SetUniformMat4(const char* uniform, const glm::mat4& matrix)
 	{
-		glm::mat4 converted = matrix.ConvertToGLM();
-
-		glUniformMatrix4fv(glGetUniformLocation(m_ShaderID, uniform), 1, GL_FALSE, glm::value_ptr(converted));
+		glUniformMatrix4fv(glGetUniformLocation(m_ShaderID, uniform), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void Shader::Load()

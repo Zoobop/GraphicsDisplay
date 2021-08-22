@@ -29,6 +29,9 @@ namespace DevEngine::Engine {
 			/** Clean the back buffer with the front buffer */
 			m_Viewport->Clear();
 
+			m_MainCamera.Inputs(m_Viewport->GetWindow());
+			m_MainCamera.UpdateMatrix(60.0f, 0.01f, 100.0f);
+
 			/** Update the application every frame */
 			OnUpdate();
 
@@ -54,7 +57,7 @@ namespace DevEngine::Engine {
 			}
 			/** Initializes the viewport window */
 			if (m_Viewport->Initialize(width, height, title) == ENGINE_INIT_SUCC) {
-				m_MainCamera = Camera(width, height, {0.0f, 1.0f, 3.0f});
+				m_MainCamera.Create(width, height, glm::vec3(0.0f, 1.0f, 3.0f));
 				ENGINE_LOG("Valid viewport for construction: Initializing viewport-");
 				return ENGINE_INIT_SUCC;
 			}

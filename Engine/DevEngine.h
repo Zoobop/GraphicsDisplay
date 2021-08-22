@@ -40,9 +40,9 @@ namespace DevEngine::Engine {
 
 	public:
 		/** Display screen */
-		class Window* m_Viewport;
+		Window* m_Viewport;
 		/** Main camera */
-		class Camera m_MainCamera;
+		Camera m_MainCamera;
 
 	private:
 		/** Fill screen color */
