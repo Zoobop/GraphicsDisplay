@@ -1,27 +1,33 @@
 #include "Mesh.h"
-#include "../Engine/Utils/DebugUtils.h"
 
 namespace DevEngine::Graphics {
 
 	Mesh::Mesh(MeshData& meshData)
-		: m_Indices(meshData.meshI), m_Vertices(meshData.meshV)
 	{
 		Texture textures[] = { n_TEXTURE_DEFAULT_DIFFUSE, n_TEXTURE_DEFAULT_SPECULAR };
 
-		m_Textures = std::vector<Texture>(textures, textures + sizeof(textures) / sizeof(Texture));
+		Mesh::m_Textures = std::vector<Texture>(textures, textures + sizeof(textures) / sizeof(Texture));
+		Mesh::m_Vertices = meshData.meshV;
+		Mesh::m_Indices = meshData.meshI;
 
 		Initialize();
 	}
 
 	Mesh::Mesh(MeshData& meshData, std::vector<Texture>& textures)
-		: m_Indices(meshData.meshI), m_Vertices(meshData.meshV), m_Textures(textures)
 	{
+		Mesh::m_Textures = textures;
+		Mesh::m_Vertices = meshData.meshV;
+		Mesh::m_Indices = meshData.meshI;
+
 		Initialize();
 	}
 
 	Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures)
-		: m_Vertices(vertices), m_Indices(indices), m_Textures(textures)
 	{
+		Mesh::m_Vertices = vertices;
+		Mesh::m_Indices = indices;
+		Mesh::m_Textures = textures;
+
 		Initialize();
 	}
 
@@ -30,15 +36,7 @@ namespace DevEngine::Graphics {
 
 	}
 
-	void Mesh::Draw
-	(
-		Shader& shader,
-		Camera& camera, 
-		DMatrix4 matrix, 
-		DVector3 translation, 
-		DQuaternion rotation, 
-		DVector3 scale
-	)
+	void Mesh::Draw(Shader& shader, Camera& camera, DMatrix4 matrix, DVector3 translation, DQuaternion rotation, DVector3 scale)
 	{
 		shader.Activate();
 		m_VAO.Bind();
@@ -60,17 +58,17 @@ namespace DevEngine::Graphics {
 			m_Textures[i].Bind();
 		}
 
-		shader.SetUniformVec3("camPos", camera.m_Position);
+		glUniform3f(glGetUniformLocation(shader.GetShaderID(), "camPos"), camera.position.x, camera.position.y, camera.position.z);
 		camera.Matrix(shader, "camMatrix");
 
-		glm::mat4 trans = glm::translate(translation.ConvertToGLM());
-		glm::mat4 rot = glm::mat4_cast(rotation.ConvertToGLM());
-		glm::mat4 scl = glm::scale(scale.ConvertToGLM());
+		DMatrix4 trans = DMatrix4::Translate(translation);
+		DMatrix4 rot = DMatrix4::FromQuat(rotation);
+		DMatrix4 scl = DMatrix4::Scale(scale);
 
 		shader.SetUniformMat4("translation", trans);
 		shader.SetUniformMat4("rotation", rot);
 		shader.SetUniformMat4("scale", scl);
-		shader.SetUniformMat4("model", matrix.ConvertToGLM());
+		shader.SetUniformMat4("model", matrix);
 
 		glDrawElements(GL_TRIANGLES, (GLsizei)m_Indices.size(), GL_UNSIGNED_INT, 0);
 	}
@@ -119,6 +117,7 @@ namespace DevEngine::Graphics {
 			Vertex{DVector3(0.1f,   0.1f, -0.1f)},
 			Vertex{DVector3(0.1f,   0.1f,  0.1f)},
 		};
+
 		GLuint cubeI[] = {
 			0, 1, 2,
 			0, 2, 3,
@@ -149,6 +148,7 @@ namespace DevEngine::Graphics {
 			Vertex{DVector3(1.0f, 0.0f,  -1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(1.0f, 1.0f)},
 			Vertex{DVector3(1.0f, 0.0f,   1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(1.0f, 0.0f)},
 		};
+
 		GLuint planeI[] = {
 			0, 1, 2,	// Bottom side
 			0, 2, 3,	// Bottom side
@@ -184,6 +184,7 @@ namespace DevEngine::Graphics {
 		Vertex{DVector3(-0.5f, 0.0f, 0.5f), DVector3(0.92f, 0.86f, 0.76f), DVector3(0.0f, 0.0f, 0.0f), DVector2(0.5f, 0.8f)}, // Facing side
 		Vertex{DVector3(0.0f, 0.8f, 0.0f), DVector3(0.92f, 0.86f, 0.76f), DVector3(2.5f, 5.0f, 0.0f), DVector2(0.5f, 0.8f)}, // Facing side
 		};
+
 		GLuint pyramidI[] = {
 			0, 1, 2,	// Bottom side
 			0, 2, 3,	// Bottom side

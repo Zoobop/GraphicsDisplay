@@ -6,13 +6,6 @@ namespace DevEngine::Math {
 	////                            3D Vector                             ////
 	//////////////////////////////////////////////////////////////////////////
 
-	DVector3::DVector3(const float& x, const float& y, const float& z)
-	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
-	}
-
 	DVector3::DVector3(const glm::vec3& other)
 	{
 		x = other.x;
@@ -25,6 +18,13 @@ namespace DevEngine::Math {
 		x = values[0];
 		y = values[1];
 		z = values[2];
+	}
+
+	DVector3::DVector3(const float& x, const float& y, const float& z)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
 	}
 
 	DVector3& DVector3::add(const DVector3& other)
@@ -40,7 +40,6 @@ namespace DevEngine::Math {
 		x += other.x;
 		y += other.y;
 		z += other.z;
-
 		return *this;
 	}
 
@@ -93,12 +92,12 @@ namespace DevEngine::Math {
 
 	DVector3 operator*(DVector3 current, const float& other)
 	{
-		return DVector3(current.x * other, current.y * other, current.z * other);
+		return DVector3();
 	}
 
 	DVector3 operator*(float current, const DVector3& other)
 	{
-		return other * current;
+		return DVector3();
 	}
 
 	DVector3 operator/(DVector3 current, const DVector3& other)
@@ -108,7 +107,7 @@ namespace DevEngine::Math {
 
 	DVector3 operator-(const DVector3& current)
 	{
-		return DVector3(-current.x, -current.y, -current.z);
+		return DVector3();
 	}
 
 	DVector3& DVector3::operator+=(const DVector3& other)
@@ -148,22 +147,22 @@ namespace DevEngine::Math {
 
 	bool DVector3::operator<=(const DVector3& other)
 	{
-		return x <= other.x && y <= other.y && z <= other.z;
+		return false;
 	}
 
 	bool DVector3::operator>=(const DVector3& other)
 	{
-		return x >= other.x && y >= other.y && z >= other.z;
+		return false;
 	}
 
 	bool DVector3::operator<=(const float& other)
 	{
-		return Length() <= other;
+		return false;
 	}
 
 	bool DVector3::operator>=(const float& other)
 	{
-		return Length() >= other;
+		return false;
 	}
 
 	bool DVector3::operator!=(const DVector3& other)
@@ -196,12 +195,6 @@ namespace DevEngine::Math {
 		return glm::vec3(x, y, z);
 	}
 
-
-	DVector3 DVector3::Make(const float* values)
-	{
-		return DVector3(values);
-	}
-
 	float DVector3::Length() const
 	{
 		return (float)sqrt(x * x + y * y + z * z);
@@ -209,13 +202,12 @@ namespace DevEngine::Math {
 
 	DVector3 DVector3::Normalize()
 	{
-		float length = Length();
+		return DVector3();
+	}
 
-		x /= length;
-		y /= length;
-		z /= length;
-
-		return *this;
+	DVector3 DVector3::Make(const float* values)
+	{
+		return DVector3(values);
 	}
 
 	DVector3 DVector3::Zero()
@@ -227,4 +219,5 @@ namespace DevEngine::Math {
 	{
 		return DVector3(1.0f, 1.0f, 1.0f);
 	}
+
 }

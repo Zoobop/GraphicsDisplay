@@ -37,17 +37,6 @@ namespace DevEngine::Math {
 		elements[3 + 3 * 4] = diagonal;
 	}
 
-	DMatrix4::DMatrix4(const DQuaternion& quaternion)
-	{
-		glm::quat converted(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
-
-		glm::mat4 matrix = glm::mat4_cast(converted);
-		
-		for (unsigned int i = 0; i < 4 * 4; i++) {
-			this->elements[i] = matrix[i / 4][i % 4];
-		}
-	}
-
 	//////////////////--------- Helper Functions ---------////////////////////
 
 	DMatrix4& DMatrix4::multiply(const DMatrix4& other)
@@ -86,15 +75,6 @@ namespace DevEngine::Math {
 		}
 	}
 
-	void DMatrix4::operator=(const glm::mat<4, 4, glm::f32, glm::packed_highp>& other)
-	{
-		for (unsigned int i = 0; i < 4 * 4; i++) {
-			this->elements[i] = other[i / 4][i % 4];
-		}
-	}
-
-	//////////////////---------- GLM Conversions ----------////////////////////
-
 	glm::mat4 DMatrix4::ConvertToGLM()
 	{
 		return glm::mat4(
@@ -110,6 +90,20 @@ namespace DevEngine::Math {
 	DMatrix4 DMatrix4::Identity()
 	{
 		return DMatrix4(1.0f);
+	}
+
+	DMatrix4 DMatrix4::FromQuat(DQuaternion quaternion)
+	{
+		glm::quat converted(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+
+		glm::mat4 glmMatrix = glm::mat4_cast(converted);
+
+		DMatrix4 matrix(1.0f);
+		for (unsigned int i = 0; i < 4; i++) {
+			matrix.elements[i] = glmMatrix[i / 4][i % 4];
+		}
+
+		return matrix;
 	}
 
 	DMatrix4 DMatrix4::Orthographic(float left, float right, float bottom, float top, float near, float far)
@@ -193,25 +187,6 @@ namespace DevEngine::Math {
 		result.elements[2 + 2 * 4] = scale.z;
 
 		return result;
-	}
-
-	DMatrix4 DMatrix4::FromQuat(const DQuaternion& quaternion)
-	{
-		glm::quat converted(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
-
-		glm::mat4 glmMatrix = glm::mat4_cast(converted);
-
-		DMatrix4 matrix(1.0f);
-		for (unsigned int i = 0; i < 4; i++) {
-			matrix.elements[i] = glmMatrix[i / 4][i % 4];
-		}
-
-		return matrix;
-	}
-
-	DMatrix4 DMatrix4::Make(const float* values)
-	{
-		return DMatrix4(values);
 	}
 
 }

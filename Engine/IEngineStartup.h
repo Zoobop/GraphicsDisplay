@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DevEngine {
+namespace DevEngine::Engine {
 
 	__interface IEngineStartup
 	{

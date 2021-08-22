@@ -9,7 +9,7 @@
 using namespace DevEngine::Math;
 using namespace DevEngine::Graphics;
 
-namespace DevEngine {
+namespace DevEngine::Engine {
 
 //////////////////////////////////////////////////////////////////////////
 ////                          Engine Base                             ////
@@ -40,13 +40,13 @@ namespace DevEngine {
 
 	public:
 		/** Display screen */
-		class Window* viewport;
+		class Window* m_Viewport;
 		/** Main camera */
-		class Camera camera;
+		class Camera m_MainCamera;
 
 	private:
 		/** Fill screen color */
-		DVector4 screenColor = DevCOLOR_BLACK;	
+		DVector4 m_ScreenColor = DevCOLOR_BLACK;	
 
 
 

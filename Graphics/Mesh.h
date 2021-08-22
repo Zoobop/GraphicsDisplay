@@ -8,11 +8,10 @@
 #include "Camera.h"
 #include "Texture.h"
 
-
-#define MESH_CUBE		MeshData().CubeMesh()
-#define MESH_PLANE		MeshData().PlaneMesh()
-#define MESH_PYRAMID	MeshData().PyramidMesh()
-#define MESH_SPHERE		MeshData()
+#define MESH_CUBE MeshData().CubeMesh()
+#define MESH_PLANE MeshData().PlaneMesh()
+#define MESH_PYRAMID MeshData().PyramidMesh()
+#define MESH_SPHERE MeshData()
 
 
 namespace DevEngine::Graphics {
@@ -21,7 +20,7 @@ namespace DevEngine::Graphics {
 	{
 	public:
 		MeshData();
-		MeshData(const Vertex m_Vertices[], const GLuint m_Indices[]);
+		MeshData(const Vertex vertices[], const GLuint indices[]);
 
 		MeshData& CubeMesh();
 		MeshData& PlaneMesh();
@@ -42,15 +41,7 @@ namespace DevEngine::Graphics {
 		Mesh(MeshData& meshData, std::vector<Texture>& textures);
 		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
 
-		void Draw
-		(
-			Shader& shader,
-			Camera& camera, 
-			DMatrix4 matrix = DMatrix4::Identity(), 
-			DVector3 translation = DVector3::Zero(),
-			DQuaternion rotation = DQuaternion(1.0f, 0.0f, 0.0f, 0.0f),
-			DVector3 scale = DVector3::Identity()
-		);
+		void Draw(Shader& shader, Camera& camera, DMatrix4 matrix = DMatrix4::Identity(), DVector3 translation = DVector3::Zero(), DQuaternion rotation = DQuaternion(1.0f, 0.0f, 0.0f, 0.0f), DVector3 scale = DVector3::Identity());
 
 	protected:
 
@@ -63,6 +54,5 @@ namespace DevEngine::Graphics {
 		std::vector<Texture> m_Textures;
 
 		VertexArray m_VAO;
-
 	};
 }

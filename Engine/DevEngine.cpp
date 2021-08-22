@@ -1,11 +1,11 @@
 #include "DevEngine.h"
 #include <iostream>
 
-namespace DevEngine {
+namespace DevEngine::Engine {
 
 	DevEngine::DevEngine()
 	{
-		viewport = new Window();
+		m_Viewport = new Window();
 	}
 
 	DevEngine::~DevEngine()
@@ -14,7 +14,7 @@ namespace DevEngine {
 		glfwTerminate();
 
 		/** Free memory */
-		free(viewport);
+		free(m_Viewport);
 	}
 
 	void DevEngine::EngineInitialize()
@@ -23,24 +23,24 @@ namespace DevEngine {
 		OnInitialize();
 
 		/** Main while loop */
-		while (!viewport->WindowExpired()) {
+		while (!m_Viewport->WindowExpired()) {
 			/** Specify the color of the background (normalized RGB) */
-			DevSCREEN_COLOR(screenColor);
+			DevSCREEN_COLOR(m_ScreenColor);
 			/** Clean the back buffer with the front buffer */
-			viewport->Clear();
+			m_Viewport->Clear();
 
 			/** Update the application every frame */
 			OnUpdate();
 
 			/** Swap the back buffer with the front buffer and take care of all GLFW events */
-			viewport->Update();
+			m_Viewport->Update();
 		}
 
 		/** Application and screen termination */
 		OnTerminate();
 
 		/** Delete window before ending the program */
-		ENGINE_GRAPHICS_TERMINATE(viewport);
+		ENGINE_GRAPHICS_TERMINATE(m_Viewport);
 	}
 
 	int DevEngine::ConstructViewport(unsigned int width, unsigned int height, const char* title)
@@ -53,8 +53,8 @@ namespace DevEngine {
 				return ENGINE_INIT_FAIL;
 			}
 			/** Initializes the viewport window */
-			if (viewport->Initialize(width, height, title) == ENGINE_INIT_SUCC) {
-				camera = Camera(width, height, DVector3::Zero());
+			if (m_Viewport->Initialize(width, height, title) == ENGINE_INIT_SUCC) {
+				m_MainCamera = Camera(width, height, {0.0f, 1.0f, 3.0f});
 				ENGINE_LOG("Valid viewport for construction: Initializing viewport-");
 				return ENGINE_INIT_SUCC;
 			}
@@ -65,27 +65,36 @@ namespace DevEngine {
 
 	void DevEngine::SetScreenColor(DVector4 color)
 	{
-		screenColor = color;
+		m_ScreenColor = color;
 	}
 
 	unsigned int DevEngine::GetScreenWidth() const
 	{
-		return viewport->GetScreenWidth();
+		return m_Viewport->GetScreenWidth();
 	}
 
 	unsigned int DevEngine::GetScreenHeight() const
 	{
-		return viewport->GetScreenHeight();
+		return m_Viewport->GetScreenHeight();
 	}
 
 	DVector4 DevEngine::GetScreenColor() const
 	{
-		return screenColor;
+		return m_ScreenColor;
 	}
 
-	void DevEngine::OnInitialize(){}
+	void DevEngine::OnInitialize()
+	{
 
-	void DevEngine::OnUpdate(){}
+	}
 
-	void DevEngine::OnTerminate(){}
+	void DevEngine::OnUpdate()
+	{
+
+	}
+
+	void DevEngine::OnTerminate()
+	{
+
+	}
 }

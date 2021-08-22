@@ -94,14 +94,14 @@ namespace DevEngine::Graphics {
   		objectModel = glm::translate(objectModel, objectPos);
   
   		/** Texture */
-  		Texture m_Textures[]{
-  			Texture("planks.png", TT_DIFFUSE, 0),
-  			Texture("planksSpec.png", TT_SPECULAR, 1),
+  		Texture textures[]{
+  			n_TEXTURE_DEFAULT_DIFFUSE,
+  			n_TEXTURE_DEFAULT_SPECULAR,
   		};
   
   		/** Generates Shader object using shaders default.vert and default.frag */
   		shaderProgram = Shader("Graphics/Shaders/default.vert", "Graphics/Shaders/default.frag");
-  		std::vector<Texture> tex(m_Textures, m_Textures + sizeof(m_Textures) / sizeof(Texture));
+  		std::vector<Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
   		//Mesh floor(verts, ind, tex);
   		Mesh floor(MESH_PLANE, tex);
   

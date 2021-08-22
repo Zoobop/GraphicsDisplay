@@ -3,6 +3,7 @@
 
 namespace DevEngine::Math {
 
+
 	DQuaternion::DQuaternion(const float& x, const float& y, const float& z, const float& w)
 	{
 		this->x = x;
@@ -39,9 +40,9 @@ namespace DevEngine::Math {
 	DQuaternion& DQuaternion::multiply(const DVector3& other)
 	{
 		float w_ = -x * other.x - y * other.y - z * other.z;
-		float x_ =  w * other.x + y * other.z - z * other.y;
-		float y_ =  w * other.y + z * other.x - x * other.z;
-		float z_ =  w * other.z + x * other.y - y * other.x;
+		float x_ = w * other.x + y * other.z - z * other.y;
+		float y_ = w * other.y + z * other.x - x * other.z;
+		float z_ = w * other.z + x * other.y - y * other.x;
 
 		this->x = x_;
 		this->y = y_;
@@ -95,8 +96,6 @@ namespace DevEngine::Math {
 	{
 		return glm::quat(x, y, z, w);
 	}
-
-
 
 	float DQuaternion::Length() const
 	{

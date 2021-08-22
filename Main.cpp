@@ -1,7 +1,7 @@
 #include "Engine/DevEngine.h"
 #include "Graphics/Camera.h"
 
-class EngineTest : public DevEngine::DevEngine
+class EngineTest : public DevEngine::Engine::DevEngine
 {
 public:
 
@@ -23,54 +23,8 @@ public:
 
 };
 
-const unsigned int width = 1280;
-const unsigned int height = 960;
-
-
-
-// Vertices coordinates
-Vertex m_Vertices[] =
-{ //               COORDINATES           /            COLORS          /           TexCoord         /       NORMALS         //
-	Vertex{DVector3(-1.0f, 0.0f,  1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(0.0f, 0.0f)},
-	Vertex{DVector3(-1.0f, 0.0f, -1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(0.0f, 1.0f)},
-	Vertex{DVector3(1.0f, 0.0f, -1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(1.0f, 1.0f)},
-	Vertex{DVector3(1.0f, 0.0f,  1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(1.0f, 0.0f)}
-};
-
-// Indices for vertices order
-GLuint m_Indices[] =
-{
-	0, 1, 2,
-	0, 2, 3
-};
-
-Vertex lightVertices[] =
-{ //     COORDINATES     //
-	Vertex{DVector3(-0.1f, -0.1f,  0.1f)},
-	Vertex{DVector3(-0.1f, -0.1f, -0.1f)},
-	Vertex{DVector3(0.1f, -0.1f, -0.1f)},
-	Vertex{DVector3(0.1f, -0.1f,  0.1f)},
-	Vertex{DVector3(-0.1f,  0.1f,  0.1f)},
-	Vertex{DVector3(-0.1f,  0.1f, -0.1f)},
-	Vertex{DVector3(0.1f,  0.1f, -0.1f)},
-	Vertex{DVector3(0.1f,  0.1f,  0.1f)}
-};
-
-GLuint lightIndices[] =
-{
-	0, 1, 2,
-	0, 2, 3,
-	0, 4, 7,
-	0, 7, 3,
-	3, 7, 6,
-	3, 6, 2,
-	2, 6, 5,
-	2, 5, 1,
-	1, 5, 4,
-	1, 4, 0,
-	4, 5, 6,
-	4, 6, 7
-};
+const unsigned int width = 1660;
+const unsigned int height = 1280;
 
 #include <filesystem>
 namespace fs = std::filesystem;
@@ -117,50 +71,43 @@ int main()
 
 
 	// Texture data
-	Texture m_Textures[]
+	Texture textures[]
 	{
-		Texture("planks.png", TT_DIFFUSE, 0),
-		Texture("planksSpec.png", TT_SPECULAR, 1)
+		n_TEXTURE_DEFAULT_DIFFUSE,
+		n_TEXTURE_DEFAULT_SPECULAR
 	};
 
 
 
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("Graphics/Shaders/default.vert", "Graphics/Shaders/default.frag");
-	// Store mesh data in vectors for the mesh
-	std::vector <Vertex> verts(m_Vertices, m_Vertices + sizeof(m_Vertices) / sizeof(Vertex));
-	std::vector <GLuint> ind(m_Indices, m_Indices + sizeof(m_Indices) / sizeof(GLuint));
-	std::vector <Texture> tex(m_Textures, m_Textures + sizeof(m_Textures) / sizeof(Texture));
-	// Create floor mesh
 	Mesh floor(MESH_PLANE);
 
 
 	// Shader for light cube
 	Shader lightShader("Graphics/Shaders/light.vert", "Graphics/Shaders/light.frag");
-	// Store mesh data in vectors for the mesh
-	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
-	std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
-	// Crate light mesh
 	Mesh light(MESH_CUBE);
 
 
 
+
+
 	DVector4 lightColor = DVector4::Identity();
-	DVector3 lightPos(0.5f, 0.5f, 0.5f);
+	DVector3 lightPos(0.0f, 0.5f, 0.0f);
+	DQuaternion lightRot(1.0f, 0.0f, 0.0f, 0.0f);
+	DVector3 lightScl(1.0f, 1.0f, 1.0f);
 	DMatrix4 lightModel = DMatrix4::Translate(lightPos);
 
 	DVector3 objectPos = DVector3::Zero();
 	DQuaternion objectRot(1.0f, 0.0f, 0.0f, 0.0f);
-	DVector3 objectScl = DVector3::Identity();
+	DVector3 objectScl(15.0f, 1.0f, 15.0f);
 	DMatrix4 objectModel = DMatrix4::Translate(objectPos);
 
 
 	lightShader.Activate();
-	lightShader.SetUniformMat4("model", lightModel);
 	lightShader.SetUniformVec4("lightColor", lightColor);
 
 	shaderProgram.Activate();
-	shaderProgram.SetUniformMat4("model", objectModel);
 	shaderProgram.SetUniformVec4("lightColor", lightColor);
 	shaderProgram.SetUniformVec3("lightPos", lightPos);
 
@@ -172,13 +119,13 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// Creates camera object
-	Camera camera(width, height, DVector3(0.0f, 0.0f, 2.0f));
+	Camera camera(width, height, DVector3(0.0f, 1.0f, 2.0f));
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
 		// Specify the color of the background
-		DevSCREEN_COLOR(DevCOLOR_DARK_BLUE);
+		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -186,13 +133,13 @@ int main()
 		// Handles camera inputs
 		camera.Inputs(window);
 		// Updates and exports the camera matrix to the Vertex Shader
-		camera.UpdateMatrix(60.0f, 0.1f, 100.0f);
+		camera.UpdateMatrix(60.0f, 0.1f, 200.0f);
+
 
 		// Draws different meshes
 		floor.Draw(shaderProgram, camera, objectModel, objectPos, objectRot, objectScl);
-		light.Draw(lightShader, camera, lightModel, lightPos);
+		light.Draw(lightShader, camera, lightModel, lightPos, lightRot, lightScl);
 
-		ENGINE_LOG(camera.m_Orientation);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
