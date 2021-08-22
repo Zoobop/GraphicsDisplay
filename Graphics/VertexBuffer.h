@@ -8,9 +8,9 @@
 #include "../Math/DVector2.h"
 #include "../Math/DVector3.h"
 
-using namespace DevEngine::Math;
+using namespace ZM::Math;
 
-namespace DevEngine::Graphics {
+namespace ZM { namespace Graphics {
 
 	struct Vertex
 	{
@@ -23,7 +23,7 @@ namespace DevEngine::Graphics {
 	class VertexBuffer
 	{
 	public:
-		VertexBuffer(std::vector<Vertex>& m_Vertices);
+		VertexBuffer(std::vector<Vertex>& vertices);
 
 		void Bind() const;
 		void Unbind() const;
@@ -33,4 +33,4 @@ namespace DevEngine::Graphics {
 		GLuint m_BufferID;
 	};
 
-}
+}}

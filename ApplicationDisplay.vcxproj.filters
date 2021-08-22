@@ -163,9 +163,6 @@
     <ClInclude Include="Math\DQuaternion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Math\IDevMathComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="gollum.png">
@@ -176,9 +173,6 @@
     </Image>
     <Image Include="planks.png">
       <Filter>Resource Files\Textures</Filter>
-    </Image>
-    <Image Include="..\..\..\Downloads\Sword_Texture.jpeg">
-      <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
 </Project>

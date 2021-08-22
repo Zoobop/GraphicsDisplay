@@ -6,10 +6,10 @@
 #include "../Graphics/Window.h"
 #include "../Math/DevMath.h"
 
-using namespace DevEngine::Math;
-using namespace DevEngine::Graphics;
+using namespace ZM::Math;
+using namespace ZM::Graphics;
 
-namespace DevEngine {
+namespace ZM { namespace Engine {
 
 //////////////////////////////////////////////////////////////////////////
 ////                          Engine Base                             ////
@@ -60,5 +60,5 @@ namespace DevEngine {
 		virtual void OnTerminate() override;
 
 	};
-}
+}}
 

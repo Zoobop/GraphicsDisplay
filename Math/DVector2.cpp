@@ -1,6 +1,6 @@
 #include "DVector2.h"
 
-namespace DevEngine::Math {
+namespace ZM { namespace Math {
 
 	//////////////////////////////////////////////////////////////////////////
 	////                            2D Vector                             ////
@@ -107,4 +107,4 @@ namespace DevEngine::Math {
 		return DVector2(1.0f, 1.0f);
 	}
 
-}
+}}

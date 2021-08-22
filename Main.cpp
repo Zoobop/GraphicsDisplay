@@ -1,9 +1,11 @@
 #include "Engine/DevEngine.h"
 #include "Graphics/Camera.h"
 
-class EngineTest : public DevEngine::DevEngine
+class EngineTest : public ZM::Engine::DevEngine
 {
 public:
+
+	Mesh floor, light;
 
 	void OnInitialize() override
 	{
@@ -23,13 +25,13 @@ public:
 
 };
 
-const unsigned int width = 1280;
-const unsigned int height = 960;
+const unsigned int width = 800;
+const unsigned int height = 800;
 
 
 
 // Vertices coordinates
-Vertex m_Vertices[] =
+Vertex vertices[] =
 { //               COORDINATES           /            COLORS          /           TexCoord         /       NORMALS         //
 	Vertex{DVector3(-1.0f, 0.0f,  1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(0.0f, 0.0f)},
 	Vertex{DVector3(-1.0f, 0.0f, -1.0f), DVector3(0.0f, 1.0f, 0.0f), DVector3(1.0f, 1.0f, 1.0f), DVector2(0.0f, 1.0f)},
@@ -38,7 +40,7 @@ Vertex m_Vertices[] =
 };
 
 // Indices for vertices order
-GLuint m_Indices[] =
+GLuint indices[] =
 {
 	0, 1, 2,
 	0, 2, 3
@@ -117,10 +119,10 @@ int main()
 
 
 	// Texture data
-	Texture m_Textures[]
+	Texture textures[]
 	{
-		Texture("planks.png", TT_DIFFUSE, 0),
-		Texture("planksSpec.png", TT_SPECULAR, 1)
+		Texture("planks.png", TT_DIFFUSE, 0, GL_RGBA, GL_UNSIGNED_BYTE),
+		Texture("planksSpec.png", TT_SPECULAR, 1, GL_RED, GL_UNSIGNED_BYTE)
 	};
 
 
@@ -128,9 +130,9 @@ int main()
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("Graphics/Shaders/default.vert", "Graphics/Shaders/default.frag");
 	// Store mesh data in vectors for the mesh
-	std::vector <Vertex> verts(m_Vertices, m_Vertices + sizeof(m_Vertices) / sizeof(Vertex));
-	std::vector <GLuint> ind(m_Indices, m_Indices + sizeof(m_Indices) / sizeof(GLuint));
-	std::vector <Texture> tex(m_Textures, m_Textures + sizeof(m_Textures) / sizeof(Texture));
+	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
+	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
+	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
 	// Create floor mesh
 	Mesh floor(MESH_PLANE);
 
@@ -145,14 +147,16 @@ int main()
 
 
 
+
+
 	DVector4 lightColor = DVector4::Identity();
 	DVector3 lightPos(0.5f, 0.5f, 0.5f);
-	DMatrix4 lightModel = DMatrix4::Translate(lightPos);
+	DMatrix4 lightModel(1.0f);
+	lightModel = DMatrix4::Translate(lightModel, lightPos);
 
 	DVector3 objectPos = DVector3::Zero();
-	DQuaternion objectRot(1.0f, 0.0f, 0.0f, 0.0f);
-	DVector3 objectScl = DVector3::Identity();
-	DMatrix4 objectModel = DMatrix4::Translate(objectPos);
+	DMatrix4 objectModel(1.0f);
+	objectModel = DMatrix4::Translate(objectModel, objectPos);
 
 
 	lightShader.Activate();
@@ -172,13 +176,13 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	// Creates camera object
-	Camera camera(width, height, DVector3(0.0f, 0.0f, 2.0f));
+	Camera camera(width, height, DVector3(0.0f, 1.0f, 2.0f));
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
 		// Specify the color of the background
-		DevSCREEN_COLOR(DevCOLOR_DARK_BLUE);
+		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -188,11 +192,11 @@ int main()
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.UpdateMatrix(60.0f, 0.1f, 100.0f);
 
-		// Draws different meshes
-		floor.Draw(shaderProgram, camera, objectModel, objectPos, objectRot, objectScl);
-		light.Draw(lightShader, camera, lightModel, lightPos);
 
-		ENGINE_LOG(camera.m_Orientation);
+		// Draws different meshes
+		floor.Draw(shaderProgram, camera);
+		light.Draw(lightShader, camera);
+
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);

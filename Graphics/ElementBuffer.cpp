@@ -1,6 +1,6 @@
 #include "ElementBuffer.h"
 
-namespace DevEngine::Graphics {
+namespace ZM { namespace Graphics {
 
 	ElementBufferObject::ElementBufferObject(std::vector<GLuint>& indices)
 	{
@@ -25,4 +25,4 @@ namespace DevEngine::Graphics {
 	{
 		glDeleteBuffers(1, &ID);
 	}
-}
+}}

@@ -3,9 +3,9 @@
 #include <glad/glad.h>
 #include <vector>
 
-namespace DevEngine::Graphics {
+namespace ZM { namespace Graphics {
 
-	class ElementBufferObject
+		class ElementBufferObject
 	{
 	public:
 		GLuint ID;
@@ -16,4 +16,4 @@ namespace DevEngine::Graphics {
 		void Delete();
 
 	};
-}
+}}

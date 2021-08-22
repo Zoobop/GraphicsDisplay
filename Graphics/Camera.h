@@ -12,9 +12,9 @@
 
 #include "Shader.h"
 
-using namespace DevEngine::Math;
+using namespace ZM::Math;
 
-namespace DevEngine::Graphics {
+namespace ZM { namespace Graphics {
 
 	class Camera
 	{
@@ -32,26 +32,26 @@ namespace DevEngine::Graphics {
 	public:
 
 		/** Stores the main three vectors of the camera */
-		DVector3 m_Position;
-		DVector3 m_Orientation = DVector3(0.0f, 0.0f, -1.0f);
-		DVector3 m_Up = DVector3(0.0f, 1.0f, 0.0f);
-		DMatrix4 m_CameraMatrix = DMatrix4(1.0f);
+		glm::vec3 position;
+		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::mat4 cameraMatrix = glm::mat4(1.0f);
 
 		/** Adjust the speed of the camera and it's sensitivity when looking around */
-		float m_Speed = 0.01f;
-		float m_Sensitivity = 100.0f;
+		float speed = 0.01f;
+		float sensitivity = 100.0f;
 
 	protected:
 
 		/** Stores the width and height of the window */
-		unsigned int m_Width;
-		unsigned int m_Height;
+		unsigned int width;
+		unsigned int height;
 
 		/** Prevents the camera from jumping around when first clicking left click */
-		bool m_FirstClick = true;
+		bool firstClick = true;
 
-		float m_DefaultSpeed = 0.01f;
-		float m_FastSpeed = 0.04f;
+		float defaultSpeed = 0.01f;
+		float fastSpeed = 0.04f;
 	};
 
-}
+}}

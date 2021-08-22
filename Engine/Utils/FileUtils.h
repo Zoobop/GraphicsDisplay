@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 
-namespace DevEngine::Utils {
+namespace ZM { namespace Utils {
 
 	class FileUtils
 	{
@@ -25,4 +25,4 @@ namespace DevEngine::Utils {
 		}
 	};
 
-}
+}}

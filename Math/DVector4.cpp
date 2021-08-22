@@ -1,6 +1,6 @@
 #include "DVector4.h"
 
-namespace DevEngine::Math {
+namespace ZM { namespace Math {
 
 	//////////////////////////////////////////////////////////////////////////
 	////                            4D Vector                             ////
@@ -14,7 +14,7 @@ namespace DevEngine::Math {
 		this->w = w;
 	}
 
-	DVector4& DevEngine::Math::DVector4::add(const DVector4& other)
+	DVector4& ZM::Math::DVector4::add(const DVector4& other)
 	{
 		x += other.x;
 		y += other.y;
@@ -126,4 +126,4 @@ namespace DevEngine::Math {
 	{
 		return DVector4(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-}
+}}

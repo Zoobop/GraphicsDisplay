@@ -7,10 +7,10 @@
 #include "../Engine/Utils/FileUtils.h"
 #include "../Math/DevMath.h"
 
-using namespace DevEngine::Utils;
-using namespace DevEngine::Math;
+using namespace ZM::Utils;
+using namespace ZM::Math;
 
-namespace DevEngine::Graphics {
+namespace ZM { namespace Graphics {
 
 #define SHADER_FILE_PATH "Graphics/Shaders/"
 
@@ -28,11 +28,11 @@ namespace DevEngine::Graphics {
 
 		void CompileErrors(unsigned int shader, const char* type);
 
-		void SetUniformVec2(const char* uniform, const DVector2& vector);
-		void SetUniformVec3(const char* uniform, const DVector3& vector);
-		void SetUniformVec4(const char* uniform, const DVector4& vector);
+		void SetUniformVec2(const char* uniform, DVector2 vector);
+		void SetUniformVec3(const char* uniform, DVector3 vector);
+		void SetUniformVec4(const char* uniform, DVector4 vector);
 
-		void SetUniformMat4(const char* uniform, DMatrix4& matrix);
+		void SetUniformMat4(const char* uniform, DMatrix4 matrix);
 
 	private:
 		void Load();
@@ -43,4 +43,4 @@ namespace DevEngine::Graphics {
 		const char* m_FragmentPath;
 	};
 
-}
+}}
