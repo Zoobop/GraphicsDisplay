@@ -79,6 +79,11 @@ namespace DevEngine::Graphics {
 		glUniformMatrix4fv(glGetUniformLocation(m_ShaderID, uniform), 1, GL_FALSE, glm::value_ptr(converted));
 	}
 
+	void Shader::SetUniformMat4(const char* uniform, glm::mat4 matrix)
+	{
+		glUniformMatrix4fv(glGetUniformLocation(m_ShaderID, uniform), 1, GL_FALSE, glm::value_ptr(matrix));
+	}
+
 	void Shader::Load()
 	{
 		std::string vertexCode = FileUtils::GetFileContents(m_VertexPath);

@@ -33,6 +33,7 @@ namespace DevEngine::Graphics {
 		void SetUniformVec4(const char* uniform, DVector4 vector);
 
 		void SetUniformMat4(const char* uniform, DMatrix4& matrix);
+		void SetUniformMat4(const char* uniform, glm::mat4 matrix);
 
 	private:
 		void Load();

@@ -63,14 +63,14 @@ namespace DevEngine::Graphics {
 		shader.SetUniformVec3("camPos", camera.m_Position);
 		camera.Matrix(shader, "camMatrix");
 
-		DMatrix4 trans = DMatrix4::Translate(translation);
-		DMatrix4 rot = DMatrix4::FromQuat(rotation);
-		DMatrix4 scl = DMatrix4::Scale(scale);
+		glm::mat4 trans = glm::translate(translation.ConvertToGLM());
+		glm::mat4 rot = glm::mat4_cast(rotation.ConvertToGLM());
+		glm::mat4 scl = glm::scale(scale.ConvertToGLM());
 
 		shader.SetUniformMat4("translation", trans);
 		shader.SetUniformMat4("rotation", rot);
 		shader.SetUniformMat4("scale", scl);
-		shader.SetUniformMat4("model", matrix);
+		shader.SetUniformMat4("model", matrix.ConvertToGLM());
 
 		glDrawElements(GL_TRIANGLES, (GLsizei)m_Indices.size(), GL_UNSIGNED_INT, 0);
 	}
