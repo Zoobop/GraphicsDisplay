@@ -95,8 +95,8 @@ namespace ZM { namespace Graphics {
   
   		/** Texture */
   		Texture textures[]{
-  			Texture("planks.png", TT_DIFFUSE, 0, GL_RGBA, GL_UNSIGNED_BYTE),
-  			Texture("planksSpec.png", TT_SPECULAR, 1, GL_RED, GL_UNSIGNED_BYTE),
+  			n_TEXTURE_DEFAULT_DIFFUSE,
+  			n_TEXTURE_DEFAULT_SPECULAR,
   		};
   
   		/** Generates Shader object using shaders default.vert and default.frag */

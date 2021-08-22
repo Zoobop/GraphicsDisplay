@@ -36,7 +36,7 @@ namespace ZM { namespace Graphics {
 
 	}
 
-	void Mesh::Draw(Shader& shader, Camera& camera, DMatrix4 matrix = DMatrix4::Identity(), DVector3 translation = DVector3::Zero(), glm::quat rotation = glm::quat(1.0f, 1.0f, 1.0f, 1.0f), DVector3 scale = DVector3::Identity())
+	void Mesh::Draw(Shader& shader, Camera& camera, DMatrix4 matrix, DVector3 translation, glm::quat rotation, DVector3 scale)
 	{
 		shader.Activate();
 		vao.Bind();

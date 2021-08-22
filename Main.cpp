@@ -121,8 +121,8 @@ int main()
 	// Texture data
 	Texture textures[]
 	{
-		Texture("planks.png", TT_DIFFUSE, 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		Texture("planksSpec.png", TT_SPECULAR, 1, GL_RED, GL_UNSIGNED_BYTE)
+		Texture("planks.png", TT_DIFFUSE, 0),
+		Texture("planksSpec.png", TT_SPECULAR, 1)
 	};
 
 
@@ -151,12 +151,14 @@ int main()
 
 	DVector4 lightColor = DVector4::Identity();
 	DVector3 lightPos(0.5f, 0.5f, 0.5f);
-	DMatrix4 lightModel(1.0f);
-	lightModel = DMatrix4::Translate(lightModel, lightPos);
+	glm::quat lightRot(1.0f, 0.0f, 0.0f, 0.0f);
+	DVector3 lightScl(1.0f, 1.0f, 1.0f);
+	DMatrix4 lightModel = DMatrix4::Translate(lightPos);
 
 	DVector3 objectPos = DVector3::Zero();
-	DMatrix4 objectModel(1.0f);
-	objectModel = DMatrix4::Translate(objectModel, objectPos);
+	glm::quat objectRot(1.0f, 0.0f, 0.0f, 0.0f);
+	DVector3 objectScl(15.0f, 1.0f, 15.0f);
+	DMatrix4 objectModel = DMatrix4::Translate(objectPos);
 
 
 	lightShader.Activate();
@@ -178,6 +180,8 @@ int main()
 	// Creates camera object
 	Camera camera(width, height, DVector3(0.0f, 1.0f, 2.0f));
 
+	int i = 0;
+
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -194,8 +198,8 @@ int main()
 
 
 		// Draws different meshes
-		floor.Draw(shaderProgram, camera);
-		light.Draw(lightShader, camera);
+		floor.Draw(shaderProgram, camera, objectModel, objectPos, objectRot, objectScl);
+		light.Draw(lightShader, camera, lightModel, lightPos, lightRot, lightScl);
 
 
 		// Swap the back buffer with the front buffer

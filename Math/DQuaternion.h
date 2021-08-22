@@ -2,11 +2,11 @@
 
 #include "DevMathHelpers.h"
 
-namespace ZM { namespace Math {
+namespace ZM::Math {
 
 	struct DQuaternion
 	{
 		
 	};
 
-}}
+}

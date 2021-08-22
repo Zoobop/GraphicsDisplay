@@ -1,7 +1,7 @@
 #include "DQuaternion.h"
 
-namespace ZM { namespace Math {
+namespace ZM::Math {
 
 
 
-}}
+}

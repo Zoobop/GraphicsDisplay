@@ -41,7 +41,7 @@ namespace ZM { namespace Graphics {
 		Mesh(MeshData& meshData, std::vector<Texture>& textures);
 		Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures);
 
-		void Draw(Shader& shader, Camera& camera, DMatrix4 matrix = DMatrix4::Identity(), DVector3 translation = DVector3::Zero(), glm::quat rotation = glm::quat(1.0f, 1.0f, 1.0f, 1.0f), DVector3 scale = DVector3::Identity());
+		void Draw(Shader& shader, Camera& camera, DMatrix4 matrix = DMatrix4::Identity(), DVector3 translation = DVector3::Zero(), glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f), DVector3 scale = DVector3::Identity());
 
 	protected:
 
