@@ -7,9 +7,9 @@ namespace DevEngine::Graphics {
 		this->width = width;
 		this->height = height;
 
-		this->position.x = position.x;
-		this->position.y = position.y;
-		this->position.z = position.z;
+		this->m_Position.x = position.x;
+		this->m_Position.y = position.y;
+		this->m_Position.z = position.z;
 	}
 
 	Camera::Camera()
@@ -22,41 +22,41 @@ namespace DevEngine::Graphics {
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
 
-		view = glm::lookAt(position, position + orientation, up);
+		view = glm::lookAt(m_Position.ConvertToGLM(), m_Position.ConvertToGLM() + m_Orientation, m_Up);
 		projection = glm::perspective(glm::radians(FOVdeg), (float)(width / height), nearPlane, farPlane);
 
-		cameraMatrix = projection * view;
+		m_CameraMatrix = projection * view;
 	}
 
 	void Camera::Matrix(Shader& shader, const char* uniform)
 	{
-		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), uniform), 1, GL_FALSE, glm::value_ptr(cameraMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(shader.GetShaderID(), uniform), 1, GL_FALSE, glm::value_ptr(m_CameraMatrix));
 	}
 
 	void Camera::Inputs(GLFWwindow* m_Window)
 	{
 		if (glfwGetKey(m_Window, GLFW_KEY_W) == GLFW_PRESS) {
-			position += speed * orientation;
+			m_Position += speed * m_Orientation;
 		}
 
 		if (glfwGetKey(m_Window, GLFW_KEY_A) == GLFW_PRESS) {
-			position += speed * -glm::normalize(glm::cross(orientation, up));
+			m_Position += speed * -glm::normalize(glm::cross(m_Orientation, m_Up));
 		}
 
 		if (glfwGetKey(m_Window, GLFW_KEY_S) == GLFW_PRESS) {
-			position += speed * -orientation;
+			m_Position += speed * -m_Orientation;
 		}
 
 		if (glfwGetKey(m_Window, GLFW_KEY_D) == GLFW_PRESS) {
-			position += speed * glm::normalize(glm::cross(orientation, up));
+			m_Position += speed * glm::normalize(glm::cross(m_Orientation, m_Up));
 		}
 
 		if (glfwGetKey(m_Window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-			position += speed * up;
+			m_Position += speed * m_Up;
 		}
 
 		if (glfwGetKey(m_Window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-			position += speed * -up;
+			m_Position += speed * -m_Up;
 		}
 
 		if (glfwGetKey(m_Window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
@@ -81,13 +81,13 @@ namespace DevEngine::Graphics {
 			float rotX = sensitivity * (float)(mouseY - (height / 2)) / height;
 			float rotY = sensitivity * (float)(mouseX - (height / 2)) / height;
 
-			glm::vec3 newOrientation = glm::rotate(orientation, glm::radians(-rotX), glm::normalize(glm::cross(orientation, up)));
+			glm::vec3 newOrientation = glm::rotate(m_Orientation, glm::radians(-rotX), glm::normalize(glm::cross(m_Orientation, m_Up)));
 
-			if (!(glm::angle(newOrientation, up) <= glm::radians(5.0f) or glm::angle(newOrientation, -up) <= glm::radians(5.0f))) {
-				orientation = newOrientation;
+			if (!(glm::angle(newOrientation, m_Up) <= glm::radians(5.0f) or glm::angle(newOrientation, -m_Up) <= glm::radians(5.0f))) {
+				m_Orientation = newOrientation;
 			}
 
-			orientation = glm::rotate(orientation, glm::radians(-rotY), up);
+			m_Orientation = glm::rotate(m_Orientation, glm::radians(-rotY), m_Up);
 
 			glfwSetCursorPos(m_Window, (width / 2), (height / 2));
 

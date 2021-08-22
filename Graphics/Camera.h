@@ -32,10 +32,10 @@ namespace DevEngine::Graphics {
 	public:
 
 		/** Stores the main three vectors of the camera */
-		glm::vec3 position;
-		glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
-		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-		glm::mat4 cameraMatrix = glm::mat4(1.0f);
+		DVector3 m_Position;
+		glm::vec3 m_Orientation = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 m_Up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::mat4 m_CameraMatrix = glm::mat4(1.0f);
 
 		/** Adjust the speed of the camera and it's sensitivity when looking around */
 		float speed = 0.01f;

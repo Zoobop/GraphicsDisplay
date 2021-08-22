@@ -22,6 +22,7 @@ namespace DevEngine::Math {
 		/** Constructors */
 		DMatrix4();
 		DMatrix4(const float* values);
+		DMatrix4(const DQuaternion& quaternion);
 		DMatrix4(float diagonal);
 
 
@@ -42,7 +43,8 @@ namespace DevEngine::Math {
 
 		/** Static Functions */
 		static DMatrix4 Identity();
-		static DMatrix4 FromQuat(DQuaternion quaternion);
+		static DMatrix4 FromQuat(const DQuaternion& quaternion);
+		static DMatrix4 Make(const float* values);
 
 		static DMatrix4 Orthographic(float left, float right, float bottom, float top, float near, float far);
 		static DMatrix4 Perspective(float fov, float aspectRatio, float near, float far);

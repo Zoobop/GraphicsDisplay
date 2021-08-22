@@ -6,27 +6,27 @@ namespace DevEngine::Graphics {
 	{
 		Texture textures[] = { n_TEXTURE_DEFAULT_DIFFUSE, n_TEXTURE_DEFAULT_SPECULAR };
 
-		Mesh::m_Textures = std::vector<Texture>(textures, textures + sizeof(textures) / sizeof(Texture));
-		Mesh::m_Vertices = meshData.meshV;
-		Mesh::m_Indices = meshData.meshI;
+		m_Textures = std::vector<Texture>(textures, textures + sizeof(textures) / sizeof(Texture));
+		m_Vertices = meshData.meshV;
+		m_Indices = meshData.meshI;
 
 		Initialize();
 	}
 
 	Mesh::Mesh(MeshData& meshData, std::vector<Texture>& textures)
 	{
-		Mesh::m_Textures = textures;
-		Mesh::m_Vertices = meshData.meshV;
-		Mesh::m_Indices = meshData.meshI;
+		m_Textures = textures;
+		m_Vertices = meshData.meshV;
+		m_Indices = meshData.meshI;
 
 		Initialize();
 	}
 
 	Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<Texture>& textures)
 	{
-		Mesh::m_Vertices = vertices;
-		Mesh::m_Indices = indices;
-		Mesh::m_Textures = textures;
+		m_Vertices = vertices;
+		m_Indices = indices;
+		m_Textures = textures;
 
 		Initialize();
 	}
@@ -58,7 +58,7 @@ namespace DevEngine::Graphics {
 			m_Textures[i].Bind();
 		}
 
-		glUniform3f(glGetUniformLocation(shader.GetShaderID(), "camPos"), camera.position.x, camera.position.y, camera.position.z);
+		shader.SetUniformVec3("camPos", camera.m_Position);
 		camera.Matrix(shader, "camMatrix");
 
 		DMatrix4 trans = DMatrix4::Translate(translation);

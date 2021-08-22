@@ -40,7 +40,7 @@ namespace DevEngine::Graphics {
 		m_LoadedMeshes.push_back(Mesh(vertices, indices, textures));
 	}
 
-	void Model::TraverseNode(unsigned int nextNode, DMatrix4 matrix /*= DMatrix4::Identity()*/)
+	void Model::TraverseNode(unsigned int nextNode, DMatrix4 matrix)
 	{
 		json node = m_JSON["nodes"][nextNode];
 
@@ -56,7 +56,7 @@ namespace DevEngine::Graphics {
 			translation = glm::make_vec3(transValues);
 		}
 
-		glm::quat rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
+		DQuaternion rotation(1.0f, 0.0f, 0.0f, 0.0f);
 		if (node.find("rotation") != node.end()) {
 
 			float rotValues[4] = {
@@ -66,7 +66,7 @@ namespace DevEngine::Graphics {
 				node["rotation"][1],
 				node["rotation"][2],
 			};
-			rotation = glm::make_quat(rotValues);
+			rotation = DQuaternion::Make(rotValues);
 		}
 
 		DVector3 scale = DVector3::Identity();
@@ -94,14 +94,14 @@ namespace DevEngine::Graphics {
 		}
 
 		DMatrix4 trans(1.0f);
-		glm::mat4 rot(1.0f);
+		DMatrix4 rot(1.0f);
 		DMatrix4 scl(1.0f);
 
 		trans = DMatrix4::Translate(translation);
-		rot = glm::mat4_cast(rotation);
+		rot = DMatrix4::FromQuat(rotation);
 		scl = DMatrix4::Scale(scale);
 
-		glm::mat4 matNextNode = matrix.ConvertToGLM() * matNode.ConvertToGLM() * trans.ConvertToGLM() * rot * scl.ConvertToGLM();
+		DMatrix4 matNextNode = matrix * matNode * trans * rot * scl;
 
 		if (node.find("mesh") != node.end()) {
 

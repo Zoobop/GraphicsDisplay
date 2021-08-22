@@ -37,6 +37,11 @@ namespace DevEngine::Math {
 		elements[3 + 3 * 4] = diagonal;
 	}
 
+	DMatrix4::DMatrix4(const DQuaternion& quaternion)
+	{
+
+	}
+
 	//////////////////--------- Helper Functions ---------////////////////////
 
 	DMatrix4& DMatrix4::multiply(const DMatrix4& other)
@@ -92,7 +97,7 @@ namespace DevEngine::Math {
 		return DMatrix4(1.0f);
 	}
 
-	DMatrix4 DMatrix4::FromQuat(DQuaternion quaternion)
+	DMatrix4 DMatrix4::FromQuat(const DQuaternion& quaternion)
 	{
 		glm::quat converted(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 
@@ -104,6 +109,11 @@ namespace DevEngine::Math {
 		}
 
 		return matrix;
+	}
+
+	DMatrix4 DMatrix4::Make(const float* values)
+	{
+		return DMatrix4(values);
 	}
 
 	DMatrix4 DMatrix4::Orthographic(float left, float right, float bottom, float top, float near, float far)

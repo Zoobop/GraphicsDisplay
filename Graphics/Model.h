@@ -44,9 +44,9 @@ namespace DevEngine::Graphics {
 
 		std::vector<Mesh> m_LoadedMeshes;
 		std::vector<DVector3> m_TranslationsMeshes;
-		std::vector<glm::quat> m_RotationsMeshes;
+		std::vector<DQuaternion> m_RotationsMeshes;
 		std::vector<DVector3> m_ScalesMeshes;
-		std::vector<glm::mat4> m_MatricesMeshes;
+		std::vector<DMatrix4> m_MatricesMeshes;
 	};
 
 }

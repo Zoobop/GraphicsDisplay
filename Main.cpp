@@ -23,11 +23,9 @@ public:
 
 };
 
-const unsigned int width = 1660;
-const unsigned int height = 1280;
+const unsigned int width = 800;
+const unsigned int height = 800;
 
-#include <filesystem>
-namespace fs = std::filesystem;
 
 int main()
 {
@@ -59,15 +57,6 @@ int main()
 	// Specify the viewport of OpenGL in the Window
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
 	glViewport(0, 0, width, height);
-
-	/*
-	* I'm doing this relative path thing in order to centralize all the resources into one folder and not
-	* duplicate them between tutorial folders. You can just copy paste the resources from the 'Resources'
-	* folder and then give a relative path from this folder to whatever resource you want to get to.
-	* Also note that this requires C++17, so go to Project Properties, C/C++, Language, and select C++17
-	*/
-	std::string parentDir = (fs::current_path().fs::path::parent_path()).string();
-	std::string texPath = "/Resources/Textures/";
 
 
 	// Texture data
