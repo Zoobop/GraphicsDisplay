@@ -57,17 +57,17 @@ namespace DevEngine::Graphics {
 		}
 	}
 
-	void Shader::SetUniformVec2(const char* uniform, const DVector2& vector)
+	void Shader::SetUniformVec2(const char* uniform, DVector2 vector)
 	{
 		glUniform2f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y);
 	}
 
-	void Shader::SetUniformVec3(const char* uniform, const DVector3& vector)
+	void Shader::SetUniformVec3(const char* uniform, DVector3 vector)
 	{
 		glUniform3f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z);
 	}
 
-	void Shader::SetUniformVec4(const char* uniform, const DVector4& vector)
+	void Shader::SetUniformVec4(const char* uniform, DVector4 vector)
 	{
 		glUniform4f(glGetUniformLocation(m_ShaderID, uniform), vector.x, vector.y, vector.z, vector.w);
 	}
