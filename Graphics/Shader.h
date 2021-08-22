@@ -28,9 +28,9 @@ namespace DevEngine::Graphics {
 
 		void CompileErrors(unsigned int shader, const char* type);
 
-		void SetUniformVec2(const char* uniform, const DVector2& vector);
-		void SetUniformVec3(const char* uniform, const DVector3& vector);
-		void SetUniformVec4(const char* uniform, const DVector4& vector);
+		void SetUniformVec2(const char* uniform, DVector2 vector);
+		void SetUniformVec3(const char* uniform, DVector3 vector);
+		void SetUniformVec4(const char* uniform, DVector4 vector);
 
 		void SetUniformMat4(const char* uniform, DMatrix4& matrix);
 
